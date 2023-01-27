@@ -185,3 +185,9 @@ sudo tasksel install ubuntu-desktop
 ```
 
 - 해당 설치 과정을 수행하면 UI가 있는 우분투로 변경됨
+
+##### ERROR
+
+- UI 창이 제대로 보정되지 않고 잘리는 경우가 발생
+- M2 mac 기준으로 우분토 display 설정을 1920 x 944으로 해야
+- 전체 화면 시 ui가 잘리지 않고 출력됨.
