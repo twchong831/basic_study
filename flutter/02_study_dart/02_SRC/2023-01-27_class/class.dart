@@ -16,6 +16,8 @@ class Player_f {
 
 void main(List<String> args) {
   var player = Player();
+  // new를 꼭 사용할 필요는 없음...
+  // var player = new Player();
   print(player.name);
   player.name = 'tw2';
   print(player.name);
@@ -25,6 +27,4 @@ void main(List<String> args) {
   var player2 = Player_f();
   print(player2.name);
   // player2.name = "twtw";  //error for final var.
-  // new를 꼭 사용할 필요는 없음...
-  // var player = new Player();
 }
