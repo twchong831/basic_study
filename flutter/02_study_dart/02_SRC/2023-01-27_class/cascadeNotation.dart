@@ -7,9 +7,9 @@ class Player {
   Player({required this.name, required this.xp, required this.team});
 
   void sayHello() {
-    print("Hi[json] my name is $name");
+    print("Hi my name is $name");
     print("\txp : $xp");
-    print("\team : $team");
+    print("\tteam : $team");
   }
 }
 

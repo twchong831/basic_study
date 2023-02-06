@@ -4,6 +4,11 @@ void sayHello(String name) {
 
 String sayHello2(String potato) => "Hello $potato nice to meet you";
 
+int sum(int a, int b) => a + b;
+
 void main() {
-  print(sayHello2("tw"));
+  sayHello("tw");
+  print(sayHello2("twtw"));
+
+  print(sum(1, 2));
 }

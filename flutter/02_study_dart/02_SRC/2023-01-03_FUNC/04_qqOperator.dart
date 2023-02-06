@@ -15,6 +15,7 @@ String capitalizeName4(String? name) => name?.toUpperCase() ?? 'None3';
 void main() {
   print(capitalizeName('tw'));
   print(capitalizeName2(null));
+  print(capitalizeName2('twwt'));
   print(capitalizeName3(null));
   print(capitalizeName4('tw4'));
   print(capitalizeName4(null));
