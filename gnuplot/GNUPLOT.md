@@ -1,9 +1,7 @@
 # GNUPLOT
 
-- ghuplot은 다양한 종류의 그래프를 그릴 수 있도록 도와주는 툴
+- gnuplot은 다양한 종류의 그래프를 그릴 수 있도록 도와주는 툴
 - 텍스트 파일로 저장된 로그와 같은 데이터를 그래프로 시각화하는데 사용하고자 함.
-
-
 
 ## 자료 배치
 
@@ -37,7 +35,7 @@
 
 ## 실행 방법
 
-```
+```powershell
 gnuplot bar.bat
 ```
 
@@ -60,7 +58,7 @@ pause mouse any "Any key or button will terminate window"
 - signal : 그래프의 타이틀 설정
 - lines : 그래프를 선 형태로 그림
 
-![선 그래프](image\gnuplot\basic\basic_graph_line.png)
+![선 그래프](image\basic\basic_graph_line.png)
 
 #### 선 굵기
 
@@ -77,15 +75,15 @@ plot	"out.txt" using 1:2 title "signal 1" w l lw 1, \
 - gnuplot은 위 코드와 같이 축약어를 사용할 수도 있음
 - 그래프 별로 선 굵기를 다르게 하여 출력
 
-![선 굵기 그래프](image\gnuplot\basic\basic_line_width.png)
+![선 굵기 그래프](image\basic\basic_line_width.png)
 
 ### Points Graph
 
-```
+```powershell
 plot	"out.txt" using 1:2 title "signal" with points
 ```
 
-![도트 그래프](image\gnuplot\basic\basic_graph_points.png)
+![도트 그래프](image\basic\basic_graph_points.png)
 
 #### 포인트 크기
 
@@ -99,15 +97,15 @@ plot	"out.txt" using 1:2 title "signal 1" w p ps 1, \
 - p : points
 - ps : point size, 포인트 사이즈 설정
 
-![포인트 사이즈 그래프](image\gnuplot\basic\basic_points_size.png)
+![포인트 사이즈 그래프](image\basic\basic_points_size.png)
 
 ### Box Graph
 
-```
+```powershell
 plot	"out.txt" using 1:2 title "signal" with boxes
 ```
 
-![박스 그래프](image\gnuplot\basic\basic_graph_box.png)
+![박스 그래프](image\basic\basic_graph_box.png)
 
 #### 박스 폭
 
@@ -119,11 +117,11 @@ plot	"out.txt" using 1:2 title "signal 1" with boxes
 - set boxwidth : 전체 박스의 폭을 0.5로 지정
 - 위와 같이 상단에 set을 해놓으면 해당 설정이 전체 그래프에 동일하게 적용됨
 
-![박스 폭 그래프](image\gnuplot\basic\basic_graph_box_width.png)
+![박스 폭 그래프](image\basic\basic_graph_box_width.png)
 
 ### 다수의 그래프 그리기
 
-```
+```makefile
 plot	"out.txt" using 1:2 title "signal 1" with lines, \
 		"" using 1:3 title "signal 2" with lines, \
 		"" using 1:4 title "signal 3" with lines, \
@@ -140,7 +138,7 @@ pause mouse any "Any key or button will terminate window"
 - 아래 그래프와 같이 gnuplot에서 자동적으로 그래프 별로 색을 부여하여 식별이 용이하게 만들어줌
 - 이는 point나 bar도 동일
 
-![다수 그래프](image\gnuplot\basic\basic_mulit_graph_line.png)
+![다수 그래프](image\basic\basic_mulit_graph_line.png)
 
 
 
@@ -155,9 +153,7 @@ plot "out_bar.txt"	using 2:xtic(1) title "signal 1",\
 
 - data histogram 스타일로 세팅하게 되면 한 지점에 여러개의 막대 그래프를 그릴 수 있음
 
-![막대 그래프 여러개](image\gnuplot\basic\basic_graph_box_mulit.png)
-
-
+![막대 그래프 여러개](image\basic\basic_graph_box_mulit.png)
 
 ### 그래프 스타일 지정
 
@@ -175,9 +171,7 @@ plot	"out.txt" using 1:2 title "signal 1" lt rgb "red" with lines, \
   - 색 이름, 색 코드를 통해 색상 지정이 가능함
 - lt 1/2 : gnuplot에 지정된 스타일을 사용
 
-![그래프 스타일 지정](image\gnuplot\basic\basic_mulit_graph_linetype.png)
-
-
+![그래프 스타일 지정](image\basic\basic_mulit_graph_linetype.png)
 
 ```makefile
 plot	"out.txt" using 1:2 title "signal 1" lt rgb "red" with points, \
@@ -186,7 +180,7 @@ plot	"out.txt" using 1:2 title "signal 1" lt rgb "red" with points, \
 		"" using 1:5 title "signal 4" lt 2 with points 
 ```
 
-![라인타입 포인트 그래프](image\gnuplot\basic\basic_mulit_graph_linetype_point.png)
+![라인타입 포인트 그래프](image\basic\basic_mulit_graph_linetype_point.png)
 
 - 위 그래프는 lt를 포인트 그래프에 적용한 결과
 - signal1과 signal3이, signal 2와 signal4가 같은 모양의 도트를 가지는데 색이 다른 것을 확인할 수 있음
@@ -205,9 +199,7 @@ plot	"out.txt" using 1:2 title "signal 1" ls 1 with points, \
 - ls : Line style, 스타일을 설정
 - 일반적으로 포인트의 모양을 변화
 
-![line style 그래프](image\gnuplot\basic\basic_mulit_graph_linestyle.png)
-
-
+![line style 그래프](image\basic\basic_mulit_graph_linestyle.png)
 
 #### Box style
 
@@ -219,11 +211,9 @@ plot	"out.txt" using 1:2 title "signal 1" with boxes
 
 - fill solid : 그래프를 채움, 1.0/0.5로 세팅
 
-![1.0 채움 그래프](image\gnuplot\basic\basic_graph_box_style.png)
+![1.0 채움 그래프](image\basic\basic_graph_box_style.png)
 
-![0.5 채움 그래프](image\gnuplot\basic\basic_graph_box_style_2.png)
-
-
+![0.5 채움 그래프](image\basic\basic_graph_box_style_2.png)
 
 ```makefile
 set boxwidth	0.1
@@ -233,7 +223,7 @@ plot	"out_bar.txt" using 1:2 title "signal 1" with boxes fill pattern 1
 - 그래프 별로 패턴 지정
 - fill pattern 숫자 : 숫자 값에 따라 해당 설정값으로 그래프를 출력
 
-![그래프 패턴](image\gnuplot\basic\basic_graph_box_each_style_01.png)
+![그래프 패턴](image\basic\basic_graph_box_each_style_01.png)
 
 ### 선과 포인트 그래프 같이 그리기
 
@@ -247,9 +237,7 @@ plot	"out.txt" using 1:2 title "signal 1" with lp lw 1 lt 1, \
 - lp : linespoints, 선과 점을 같이 표시
 - lw : line width, 선의 굵기
 
-![선과 점 그래프](image\gnuplot\basic\basic_mulit_graph_pointNline.png)
-
-
+![선과 점 그래프](image\basic\basic_mulit_graph_pointNline.png)
 
 ## 축 범위 설정
 
@@ -260,8 +248,6 @@ set xrange[0:100]
 
 - 그래프 축의 범위를 설정
 
-
-
 ## 축 이름 지정
 
 ```makefile
@@ -271,8 +257,6 @@ set ylabel "y"
 
 - 축 이름을 그래프 상에서 출력
 
-
-
 ## 그래프 이름 출력
 
 ```makefile
@@ -280,8 +264,6 @@ set title	"one Client activated"
 ```
 
 - 그래프 이름을 그래프 상에서 출력
-
-
 
 ## 이미지 파일로 저장
 
@@ -295,8 +277,6 @@ unset output
 - term : 저장할 파일의 종류 설정
 - output : 실행이 종료되면 결과를 해당 파일로 저장
 
-
-
 ## 이미지 파일의 크기 설정
 
 ```makefile
@@ -305,8 +285,6 @@ set term png size 2000,2000
 
 - term 명령어 사용 시, size 명령어를 추가적으로 사용하면
 - 저장하는 이미지의 크기를 설정할 수 있음
-
-
 
 ## 루프를 통해 연속된 그래프 그리기
 
@@ -330,19 +308,15 @@ do for [i=0:15]{
   - val = i+2 : 헹의 위치를 해당 코드와 같이 지정
   - 1:val 에서 해당 행을 파싱하여 그래프를 그림
 
-
-
 ## PCD 파일
 
 PCL에서 로그 파일 형식으로 사용하는 pcd 파일을 기반으로 gnuplot을 이용하여 그래프를 그리는 방법
-
-
 
 ### 2차원
 
 #### 그래프 그리기
 
-```
+```xml
 # .PCD v0.7 - Point Cloud Data file format
 VERSION 0.7
 FIELDS x y z rgb
@@ -391,8 +365,6 @@ do for [i=363:439]{
 - 2차원 그래프를 그리므로,  x축을 기준으로 y축 값을 포인트의 z 값을 할당하게 되면 프론트 뷰의 2차원 그래프를 그리게 됨
 - 탑뷰의 그래프를 그리고자 한다면, y 축 값을 포인트의 y 축 값을 할당
 
-
-
 #### 포인트별 색
 
 - pcd 파일 작성 시, 각 포인트 별로 컬러 값을 가지고 있음
@@ -416,8 +388,6 @@ do for [i=363:439]{
 - 위 코드와 같이 file을 읽을 때, z값으로 포인트의 색상코드를 읽어옴
 - 이를 기반으로 palette 명령어를 통해 z 값을 색상을 변경하도록 설정
 
-
-
 #### 필터링
 
 ```makefile
@@ -432,9 +402,7 @@ do for [i=363:439]{
   - 조건을 불만족할 경우 NaN 값을 할당
   - NAN 값은 그래프 상에서 출력되지 않음
 
-![조건에 따른 출력 변화](image\gnuplot\pcd\condition_point.png)
-
-
+![조건에 따른 출력 변화](image\pcd\condition_point.png)
 
 ####  로그의 색 값으로 출력
 
@@ -447,10 +415,6 @@ plot	file using 1:2:(rgb($3, $4, $5)) with point ps 2 pt 7 lc rgb variable
 - 로그 파일에 기록된 RGB 값을 기반으로 그래프를 그릴 경우
 - rgb 함수를 위 코드와 같이 정의
 - lc rgb variable 명령어를 통해 z 값에 할당한 색상 값을 그래프에 적용할 수 있음
-
-
-
-
 
 ## 폴더 내 검색
 
@@ -470,10 +434,6 @@ do for [file in system("cd 'Dir'; ls")]{
 - 특정 폴더로 이동하여 검색하고자 한다면, cd 명령어를 이용하고
 - 해당 경로를 삽입하고자 한다면, dirFile과 같이 .을 통해 문자열을 합칠 수 있음
 
-
-
-
-
 ## 파일명으로부터 숫자 추출
 
 ```makefile
@@ -483,13 +443,9 @@ do for [file in system("cd 'Dir'; ls")]{
 get2Num(f) = substr(f, 8, strlen(f)-4) + 0
 ```
 
-
-
 - 입력받은 문자열로부터 특정 위치의 숫자를 추출하는 함수
 - 0을 더해주어야 받는 변수 쪽에서 이를 int 형으로 인식
 - 0을 더해주지 않을 경우 string으로 인식
-
-
 
 ## 파일 존재 여부 확인
 
@@ -501,8 +457,6 @@ fileExist(f) = system("echo '".f."';  [ ! -f '".f."' ]; echo $?")
 - 위 함수를 통해 폴더 내의 파일 존재 여부를 확인할 수 있으며
 - 있으면 1을, 없으면 0을 리턴
 
-
-
 ## HSV를 RGB로
 
 ```makefile
@@ -512,10 +466,6 @@ plot file using 1:2:hsv2rgb(h/360, s, v) with p lc rgb variable
 - gnuplot에서 지원하는 hsv2rgb 함수를 이용
 - h,s,v는 1.0까지 세팅
 - plot 상에서 표현하기 위해 lc rgb variable을 사용하여 각 지점의 색을 표현
-
-
-
-
 
 ## 값 계산하기
 
@@ -531,14 +481,10 @@ print STATS_max
 print STATS_min
 ```
 
-
-
 - stats를 통해 입력한 값들을 기반으로 자동 연산
 - 여러 축의 값을 입력할 경우 해당 축을 값이 변수명에
 - 한 축만을 가지고 있다면, 축이름 없이 찾고자 하는 값의 이름만을 불러서 
 - 해당 값을 확인할 수 있음
-
-
 
 ### STATS 리스트
 
@@ -549,8 +495,6 @@ print STATS_min
 | `STATS_blank`      |      | number of blank lines in the file               |
 | `STATS_blocks`     |      | number of indexable datablocks in the file      |
 | `STATS_columns`    |      | number of data columns in the first row of data |
-
-
 
 | `STATS_min`          |      |      | minimum value of in-range data points              |
 | -------------------- | ---- | ---- | -------------------------------------------------- |
@@ -573,8 +517,6 @@ print STATS_min
 | `STATS_skewness_err` |      |      | standard error of the skewness                     |
 | `STATS_kurtosis_err` |      |      | standard error of the kurtosis                     |
 
-
-
 | `STATS_correlation`   |      | sample correlation coefficient between x and y values |
 | --------------------- | ---- | ----------------------------------------------------- |
 | `STATS_slope`         |      | A corresponding to a linear fit y = Ax + B            |
@@ -584,10 +526,6 @@ print STATS_min
 | `STATS_sumxy`         |      | sum of x*y                                            |
 | `STATS_pos_min_y`     |      | x coordinate of a point with minimum y value          |
 | `STATS_pos_max_y`     |      | x coordinate of a point with maximum y value          |
-
-
-
-
 
 ## label
 
@@ -599,8 +537,6 @@ print STATS_min
 # title : 제목
 ```
 
-
-
 ### 기본
 
 ```makefile
@@ -609,9 +545,7 @@ set xlabel "x-tics" font ",20" offset 0,-1,0
 set ylabel "y-tics" font ",10" offset 4,0,0
 ```
 
-![xlabel/ylabel](image\gnuplot\label\test_label.png)
-
-
+![xlabel/ylabel](image\label\test_label.png)
 
 ### 특정 위치 출력
 
@@ -619,7 +553,7 @@ set ylabel "y-tics" font ",10" offset 4,0,0
 set label "test label" at 2,2
 ```
 
-![라벨위치](image\gnuplot\label\test_label2.png)
+![라벨위치](image\label\test_label2.png)
 
 ### margin
 
@@ -630,7 +564,7 @@ set bmargin 3	#bottom
 set rmargin 4	#right
 ```
 
-![마진변경](image\gnuplot\label\test_label3.png)
+![마진변경](image\label\test_label3.png)
 
 - 마진이 변경됨에 따라 x,y 축의 타이틀이 사라진 것을 확인할 수 있음
 
@@ -644,12 +578,10 @@ set xlabel	"x-tics" font ",20" offset 0,0,0
 set ylabel	"y-tics" font ",40" offset 6,0,0
 ```
 
-![마진 최적화](image\gnuplot\label\test_label4.png)
+![마진 최적화](image\label\test_label4.png)
 
 - 마진 값에 따라 출력되는 범위가 달라지므로,
 - x/y label의 offset 값을 적절히 조절해줄 필요가 있음
-
-
 
 ### 특정 값 입력하여 label로 출력
 
@@ -659,5 +591,4 @@ str = gptinf("test label : %g", i)
 set label str at 2,2
 ```
 
-![라벨 숫자입력](image\gnuplot\label\test_label5.png)
-
+![라벨 숫자입력](image\label\test_label5.png)
