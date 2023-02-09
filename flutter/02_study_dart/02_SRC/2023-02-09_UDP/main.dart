@@ -34,10 +34,12 @@ void main(List<String> args) {
 
       if (total.length == 32752 + 26456) {
         /*
+        // 전체 출력
         var str_hex = total.map((e) => e.toRadixString(16));
         print('Input [${total.length}]: $str_hex');
         */
         /*
+        // 특정 영역만 출력
         print('Input [${total.length}] : ');
         for (var i = 0; i < total.length; i += outputInverval) {
           late var str;
@@ -51,8 +53,6 @@ void main(List<String> args) {
           print(str);
         }*/
         var str = total.map((e) => e.toRadixString(16));
-        // var end1=total.length-2;
-        // var end2=total.length-1;
         print(
             'Input[${total.length}] [${str.elementAt(0)}][${str.elementAt(1)}]...[${str.elementAt(str.length - 2)}][${str.elementAt(str.length - 1)}]');
       }
