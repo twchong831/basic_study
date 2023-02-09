@@ -5,7 +5,7 @@ void main(List<String> args) {
   //port : 5004
   late List total;
 
-  final int outputInverval = 50;
+  // final int outputInverval = 50;
 
   // RawDatagramSocket.bind(InternetAddress.anyIPv4, 5004)
   RawDatagramSocket.bind(InternetAddress('192.168.4.60'), 5004)
@@ -33,8 +33,11 @@ void main(List<String> args) {
       // print('Input [${d.data.length}]: $str_hex');
 
       if (total.length == 32752 + 26456) {
-        // var str_hex = total.map((e) => e.toRadixString(16));
-        // print('Input [${total.length}]: $str_hex');
+        /*
+        var str_hex = total.map((e) => e.toRadixString(16));
+        print('Input [${total.length}]: $str_hex');
+        */
+        /*
         print('Input [${total.length}] : ');
         for (var i = 0; i < total.length; i += outputInverval) {
           late var str;
@@ -46,7 +49,12 @@ void main(List<String> args) {
                 .getRange(i, i + outputInverval)
                 .map((e) => e.toRadixString(16));
           print(str);
-        }
+        }*/
+        var str = total.map((e) => e.toRadixString(16));
+        // var end1=total.length-2;
+        // var end2=total.length-1;
+        print(
+            'Input[${total.length}] [${str.elementAt(0)}][${str.elementAt(1)}]...[${str.elementAt(str.length - 2)}][${str.elementAt(str.length - 1)}]');
       }
     });
   });
