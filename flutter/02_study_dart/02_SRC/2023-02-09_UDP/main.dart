@@ -52,6 +52,7 @@ void main(List<String> args) {
                 .map((e) => e.toRadixString(16));
           print(str);
         }*/
+        // header와 tail 값만 출력
         var str = total.map((e) => e.toRadixString(16));
         print(
             'Input[${total.length}] [${str.elementAt(0)}][${str.elementAt(1)}]...[${str.elementAt(str.length - 2)}][${str.elementAt(str.length - 1)}]');
