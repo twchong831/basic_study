@@ -15,6 +15,8 @@ class App extends StatelessWidget {
       home: Scaffold(
         backgroundColor: const Color(0xFF181818), // set background color
         body: SingleChildScrollView(
+          //스크롤링
+          // body: Container(
           child: Padding(
             // set padding
             padding: const EdgeInsets.symmetric(
