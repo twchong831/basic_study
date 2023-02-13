@@ -26,13 +26,13 @@ class App extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               // make column
               children: [
-                SizedBox(
+                const SizedBox(
                   //임의의 위젯을 삽입
                   height: 80,
-                  child: Container(
-                    // sizedwidget 확인용 색 할당
-                    color: Colors.blue,
-                  ),
+                  // child: Container(
+                  //   // sizedwidget 확인용 색 할당
+                  //   color: Colors.blue,
+                  // ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end, //정렬
@@ -61,11 +61,11 @@ class App extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 60,
-                  child: Container(
-                    color: Colors.blue, // check sizedbox
-                  ),
+                  // child: Container(
+                  //   color: Colors.blue, // check sizedbox
+                  // ),
                 ),
                 Text(
                   'Total Balance',
@@ -74,11 +74,11 @@ class App extends StatelessWidget {
                     color: Colors.white.withOpacity(0.8),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
-                  child: Container(
-                    color: Colors.blue,
-                  ),
+                  // child: Container(
+                  //   color: Colors.blue,
+                  // ),
                 ),
                 const Text(
                   '\$5 194 482',
@@ -88,11 +88,11 @@ class App extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
-                  child: Container(
-                    color: Colors.blue,
-                  ),
+                  // child: Container(
+                  //   color: Colors.blue,
+                  // ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -109,11 +109,11 @@ class App extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
-                  child: Container(
-                    color: Colors.blue,
-                  ),
+                  // child: Container(
+                  //   color: Colors.blue,
+                  // ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -135,11 +135,11 @@ class App extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
-                  child: Container(
-                    color: Colors.blue,
-                  ),
+                  // child: Container(
+                  //   color: Colors.blue,
+                  // ),
                 ),
                 const CurrencyCard(
                   name: 'Euro',

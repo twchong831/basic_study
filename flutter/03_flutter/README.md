@@ -41,3 +41,14 @@ flutter create [project_name]
 - 단축키 : [ cmd + . ]
 
 ![ex codeaction](./image/img_flutter_codeAction.png)
+
+## FUNC
+
+### how to make widget using vscode
+
+```dart
+st + 자동완선
+```
+
+- vscode의 자동완성 기능을 사용하여
+- 편리하게 statefulwidget이나 statefulesswidget을 생성할 수 있음
