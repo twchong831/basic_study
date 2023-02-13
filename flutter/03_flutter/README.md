@@ -47,7 +47,7 @@ flutter create [project_name]
 ### how to make widget using vscode
 
 ```dart
-st + 자동완선
+stl + 자동완선
 ```
 
 - vscode의 자동완성 기능을 사용하여
