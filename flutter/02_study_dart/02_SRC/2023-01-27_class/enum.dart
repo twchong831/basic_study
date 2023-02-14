@@ -21,4 +21,11 @@ void main(List<String> args) {
     ..xp = 3000
     ..team = TEAM.blue
     ..sayHello();
+
+  TEAM t = TEAM.red;
+  print(t);
+  if (t == TEAM.red)
+    print("true");
+  else
+    print(false);
 }
