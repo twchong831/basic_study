@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 
@@ -56,6 +57,17 @@ class _HomeScreenState extends State<HomeScreen> {
     return duration.toString().split(".").first.substring(2, 7);
   }
 
+  // reset button func.
+  void onPressedReset() {
+    // timer.cancel();
+    setState(() {
+      // if (isRunning) isRunning = false;
+      sleep(const Duration(milliseconds: 50));
+      totalSeconds = timerMax;
+      sleep(const Duration(milliseconds: 100));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,15 +91,25 @@ class _HomeScreenState extends State<HomeScreen> {
           Flexible(
             flex: 2,
             child: Center(
-              child: IconButton(
-                iconSize: 120,
-                color: Theme.of(context).cardColor,
-                onPressed: isRunning ? onPausePressed : onStartPressed,
-                icon: Icon(
-                  isRunning
-                      ? Icons.pause_circle_filled_outlined
-                      : Icons.play_circle_fill_outlined,
-                ),
+              child: Column(
+                children: [
+                  IconButton(
+                    iconSize: 120,
+                    color: Theme.of(context).cardColor,
+                    onPressed: isRunning ? onPausePressed : onStartPressed,
+                    icon: Icon(
+                      isRunning
+                          ? Icons.pause_circle_outline_rounded
+                          : Icons.play_circle_outline_rounded,
+                    ),
+                  ),
+                  IconButton(
+                    iconSize: 120,
+                    color: Theme.of(context).cardColor,
+                    onPressed: onPressedReset,
+                    icon: const Icon(Icons.restore_outlined),
+                  ),
+                ],
               ),
             ),
           ),
