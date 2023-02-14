@@ -10,15 +10,27 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int totalSeconds = 1500;
+  static const int timerMax = 1500;
+  int totalSeconds = timerMax;
   bool isRunning = false;
 
   late Timer timer; //late : 나중에 초기화
 
+  int totalPomorodos = 0;
+
   void onTicks(Timer timer) {
-    setState(() {
-      totalSeconds -= 1;
-    });
+    if (totalSeconds == 0) {
+      setState(() {
+        totalSeconds = timerMax;
+        totalPomorodos += 1;
+        isRunning = false;
+      });
+      timer.cancel();
+    } else {
+      setState(() {
+        totalSeconds -= 1;
+      });
+    }
   }
 
   void onStartPressed() {
@@ -38,6 +50,12 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  String format(int sec) {
+    var duration = Duration(seconds: sec);
+    // print(duration.toString().split(".").first.substring(2, 7));
+    return duration.toString().split(".").first.substring(2, 7);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               alignment: Alignment.bottomCenter,
               child: Text(
-                '$totalSeconds',
+                format(totalSeconds),
                 style: TextStyle(
                   color: Theme.of(context).cardColor,
                   fontSize: 89,
@@ -88,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Pomodoros',
+                          'Pomorodos',
                           style: TextStyle(
                             fontSize: 20,
                             color: Theme.of(context)
@@ -99,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         Text(
-                          '0',
+                          '$totalPomorodos',
                           style: TextStyle(
                             fontSize: 58,
                             color: Theme.of(context)
