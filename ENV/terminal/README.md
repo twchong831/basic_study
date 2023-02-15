@@ -100,7 +100,8 @@ fig restart
 #### ubuntu
 
 ```powershell
-sudo apt-get install fig
+bash <(curl -fSsL https://fig.io/headless.sh) && exec $SHELL
+sudo apt-get install fig    # re-install with gui
 
 # login
 fig login    # using github or email
@@ -143,4 +144,4 @@ fig restart
 export GTK_IM_MODULE=ibus
 ```
 
-- 에러는 없어지는데 자동완성 창은 여전히 왼쪽 상단에 출력됨
+- **에러는 없어지는데 자동완성 창은 여전히 왼쪽 상단에 출력됨**
