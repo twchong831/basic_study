@@ -25,26 +25,30 @@ class WebtoonWidget extends StatelessWidget {
               thumb: thumb,
               id: id,
             ), // 새로운 페이지를 생성해줌
-            fullscreenDialog: true, // 새 페이지 출력 시, 아래에서 위로 출력됨
+            // fullscreenDialog: true, // 새 페이지 출력 시, 아래에서 위로 출력됨 // hero 사용해서 주석화
           ),
         );
       },
       child: Column(
         children: [
-          Container(
-            width: 250,
-            clipBehavior: Clip.hardEdge, // image round
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15), // image round
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 15,
-                  offset: const Offset(10, 10),
-                  color: Colors.black.withOpacity(0.5),
-                ),
-              ],
+          Hero(
+            // for beariful moving
+            tag: id,
+            child: Container(
+              width: 250,
+              clipBehavior: Clip.hardEdge, // image round
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15), // image round
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 15,
+                    offset: const Offset(10, 10),
+                    color: Colors.black.withOpacity(0.5),
+                  ),
+                ],
+              ),
+              child: Image.network(thumb),
             ),
-            child: Image.network(thumb),
           ),
           const SizedBox(
             height: 10,
