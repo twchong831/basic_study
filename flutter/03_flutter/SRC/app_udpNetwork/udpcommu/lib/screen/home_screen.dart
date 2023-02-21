@@ -1,6 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:udpcommu/widgets/text_editor_widget.dart';
-import 'package:get_ip_address/get_ip_address.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -12,9 +13,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String ipAddress = '127.0.0.1';
+  String ipAddress = '';
   int portNum = 5000;
   bool isCheckedConnect = false;
+
+  List localIPList = [
+    '0.0.0.0',
+  ];
+
+  final List basicList = [
+    '0,0,0,0',
+  ];
 
   // final double minWidth = 500;
   // final double minHight = 100;
@@ -53,21 +62,50 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void getNetworkInform() async {
-    // try {
-    //   var list = await NetworkInterface.list(
-    //     includeLoopback: true,
-    //     type: InternetAddressType.IPv4,
-    //   );
-    //   for (var i = 0; i < list.length; i++) {
-    //     print(list[i].name);
-    //     print(list[i].addresses[0].address);
-    //   }
-    // } catch (e) {
-    //   print('exception');
-    // }
-    var ip = IpAddress(type: RequestType.json);
-    dynamic data = await ip.getIpAddress();
-    print(data);
+    try {
+      final list = await NetworkInterface.list(
+        includeLoopback: true,
+        type: InternetAddressType.IPv4,
+      );
+      setState(() {
+        localIPList.clear();
+        localIPList.clear();
+        for (var i = 0; i < list.length; i++) {
+          // print(list[i].name);
+          // print(list[i].addresses[0].address);
+          localIPList.add("${list[i].name} : ${list[i].addresses[0].address}");
+        }
+      });
+    } catch (e) {
+      //exception
+      localIPList.add("0.0.0.0");
+    }
+    print("update ip List : $localIPList");
+    for (var i in localIPList) {
+      print(i);
+    }
+  }
+
+  void onDropBoxChanged() {
+    print('dropbox changed');
+  }
+
+  List<DropdownMenuItem<Object?>> buildDropdownItems(
+    List items,
+  ) {
+    print('input items Size : ${items.length}');
+
+    List<DropdownMenuItem<Object?>> list = [];
+
+    for (int i = 0; i < items.length; i++) {
+      list.add(
+        DropdownMenuItem(
+          value: i,
+          child: Text(items[i]),
+        ),
+      );
+    }
+    return list;
   }
 
   @override
@@ -83,7 +121,30 @@ class _HomeScreenState extends State<HomeScreen> {
             Row(
               children: [
                 Expanded(
-                  child: ipText,
+                  // child: ipText,
+                  child: DropdownButton(
+                    value: ipAddress.isNotEmpty ? ipAddress : "0.0.0.0",
+                    // items: localIPList.map(
+                    //   (String item) {
+                    //     return DropdownMenuItem<String>(
+                    //       value: item,
+                    //       child: Text(item),
+                    //     );
+                    //   },
+                    // ).toList(),
+                    // items: DropdownMenuItem(localIPList),
+
+                    items: buildDropdownItems(localIPList).isNotEmpty
+                        ? buildDropdownItems(localIPList).toList()
+                        : buildDropdownItems(basicList).toList(),
+                    onChanged: (dynamic value) {
+                      setState(
+                        () {
+                          ipAddress = value;
+                        },
+                      );
+                    },
+                  ),
                 ),
                 const SizedBox(
                   width: 10,
@@ -93,7 +154,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            Column(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 IconButton(
                   onPressed: onCheckedConnect,
@@ -107,10 +169,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: const Icon(
                     Icons.refresh_outlined,
                   ),
+                  iconSize: 40,
                 )
               ],
             ),
             Text('SET : $ipAddress $portNum'),
+            Text(
+              'local? : $localIPList',
+            ),
           ],
         ),
       ),
