@@ -1,5 +1,17 @@
 # git 관련 사항 정리
 
+## commit message convention
+
+### type
+
+- feat : 새로운 기능 추가
+- fix : 버그 수정
+- docs : 문서 수정
+- style : 코드 포맷팅, 코드 변경이 없는 경우
+- refactor : 코드 리펙토링
+- test : 테스트 코드
+- chore : 빌드 업무 수정
+
 ## .DS_Store
 
 - mac os에서 정의한 파일 포맷

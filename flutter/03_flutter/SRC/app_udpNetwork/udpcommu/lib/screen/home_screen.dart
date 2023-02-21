@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:udpcommu/widgets/text_editor_widget.dart';
 
@@ -31,6 +33,21 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+  }
+
+  //network information
+  void getNetworkInform() async {
+    // get network information
+    // it activates in macOS simulator
+    print("pushed [getNetworkInform] ${NetworkInterface.list()}");
+
+    for (var ifc in await NetworkInterface.list()) {
+      print('== Interface : ${ifc.name} ==');
+      for (var addr in ifc.addresses) {
+        print(
+            '${addr.address} ${addr.host} ${addr.isLoopback} ${addr.rawAddress} ${addr.type.name}');
+      }
+    }
   }
 
   void onCheckedConnect() {
@@ -74,12 +91,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            IconButton(
-              onPressed: onCheckedConnect,
-              icon: isCheckedConnect
-                  ? const Icon(Icons.radio_button_on_rounded)
-                  : const Icon(Icons.radio_button_off_rounded),
-              iconSize: 40,
+            Column(
+              children: [
+                IconButton(
+                  onPressed: onCheckedConnect,
+                  icon: isCheckedConnect
+                      ? const Icon(Icons.radio_button_on_rounded)
+                      : const Icon(Icons.radio_button_off_rounded),
+                  iconSize: 40,
+                ),
+                IconButton(
+                  onPressed: getNetworkInform,
+                  icon: const Icon(
+                    Icons.refresh_outlined,
+                  ),
+                )
+              ],
             ),
             Text('SET : $ipAddress $portNum'),
           ],

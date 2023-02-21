@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+enum TEXTMODE {
+  ip, //ip address
+  port, //port number.
+  txt, //some text
+}
+
 class WidgetTextField extends StatefulWidget {
   final String label;
   final String hint;

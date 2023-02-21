@@ -83,3 +83,11 @@ dependencies:
 - ios : /project/ios/Runner/Base.Iproj/Info.plist에 추가
 
 - 추가 후, 디버깅 중이라면 디버깅을 새로해야함.
+
+## PACKAGE
+
+### network_info_plus
+
+- wifi 네트워크 정보 획득
+
+[링크](https://pub.dev/packages/network_info_plus)
