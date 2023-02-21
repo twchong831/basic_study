@@ -75,6 +75,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  get_ip_address:
+    dependency: "direct main"
+    description:
+      name: get_ip_address
+      sha256: "50265edb9b1c917a29c741f3173c0dca34d8e0fc2984aed87c58f0269bf93f29"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.5"
   http:
     dependency: transitive
     description:
@@ -91,14 +99,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
-  ipstack:
-    dependency: "direct main"
-    description:
-      name: ipstack
-      sha256: b970d574a8b71844baea2cb85b2e0231221dd7966fc576cefb42761ba7c54df9
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.5.1+1"
   js:
     dependency: transitive
     description:
@@ -147,14 +147,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.2"
-  pedantic:
-    dependency: transitive
-    description:
-      name: pedantic
-      sha256: "67fc27ed9639506c856c840ccce7594d0bdcd91bc8d53d6e52359449a1d50602"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.11.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -226,4 +218,3 @@ packages:
     version: "2.1.4"
 sdks:
   dart: ">=2.19.2 <3.0.0"
-  flutter: ">=1.17.0"

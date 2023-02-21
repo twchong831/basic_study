@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:udpcommu/widgets/text_editor_widget.dart';
+import 'package:get_ip_address/get_ip_address.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -33,26 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
-  //network information
-  // void getNetworkInform() async {
-  //   // get network information
-  //   // it activates in macOS simulator
-  //   print("pushed [getNetworkInform] ${NetworkInterface.list()}");
-
-  //   for (var ifc in await NetworkInterface.list()) {
-  //     print('== Interface : ${ifc.name} ==');
-  //     for (var addr in ifc.addresses) {
-  //       print(
-  //           '${addr.address} ${addr.host} ${addr.isLoopback} ${addr.rawAddress} ${addr.type.name}');
-  //     }
-  //   }
-  // }
-
-  void getNetworkInform() async {
-    // final result = await IpStack("myapikey").requester();
-    // print(result.ip);
-  }
-
   void onCheckedConnect() {
     setState(() {
       isCheckedConnect = !isCheckedConnect;
@@ -69,6 +50,24 @@ class _HomeScreenState extends State<HomeScreen> {
     if (isCheckedConnect) {
       print("IP/port : $ipAddress / $portNum");
     }
+  }
+
+  void getNetworkInform() async {
+    // try {
+    //   var list = await NetworkInterface.list(
+    //     includeLoopback: true,
+    //     type: InternetAddressType.IPv4,
+    //   );
+    //   for (var i = 0; i < list.length; i++) {
+    //     print(list[i].name);
+    //     print(list[i].addresses[0].address);
+    //   }
+    // } catch (e) {
+    //   print('exception');
+    // }
+    var ip = IpAddress(type: RequestType.json);
+    dynamic data = await ip.getIpAddress();
+    print(data);
   }
 
   @override
