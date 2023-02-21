@@ -2,7 +2,9 @@
 
 ## example
 
-### macOS only
+### NetworkInterface
+
+#### macOS only
 
 ```dart
   void getNetworkInform() async {
@@ -18,6 +20,29 @@
   }
 ```
 
-#### result
+##### result
 
 ![결과](./image/img_flutter_network_get_01.png)
+
+### r_get_ip
+
+[ref.](https://pub.dev/packages/r_get_ip)
+
+## Error
+
+### operation not permitted
+
+#### mac OS
+
+- add config text in files
+
+```powershell
+/flutter-project/macos/Runner/DebugProfile.entitlements
+and
+/flutter-project/macos/Runner/Release.entitlements
+```
+
+```json
+ <key>com.apple.security.network.client</key>
+ <true/>
+```

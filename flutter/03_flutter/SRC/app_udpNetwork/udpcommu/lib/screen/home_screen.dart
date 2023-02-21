@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:udpcommu/widgets/text_editor_widget.dart';
 
@@ -36,18 +34,23 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   //network information
-  void getNetworkInform() async {
-    // get network information
-    // it activates in macOS simulator
-    print("pushed [getNetworkInform] ${NetworkInterface.list()}");
+  // void getNetworkInform() async {
+  //   // get network information
+  //   // it activates in macOS simulator
+  //   print("pushed [getNetworkInform] ${NetworkInterface.list()}");
 
-    for (var ifc in await NetworkInterface.list()) {
-      print('== Interface : ${ifc.name} ==');
-      for (var addr in ifc.addresses) {
-        print(
-            '${addr.address} ${addr.host} ${addr.isLoopback} ${addr.rawAddress} ${addr.type.name}');
-      }
-    }
+  //   for (var ifc in await NetworkInterface.list()) {
+  //     print('== Interface : ${ifc.name} ==');
+  //     for (var addr in ifc.addresses) {
+  //       print(
+  //           '${addr.address} ${addr.host} ${addr.isLoopback} ${addr.rawAddress} ${addr.type.name}');
+  //     }
+  //   }
+  // }
+
+  void getNetworkInform() async {
+    // final result = await IpStack("myapikey").requester();
+    // print(result.ip);
   }
 
   void onCheckedConnect() {
