@@ -32,14 +32,7 @@ class WidgetTextField extends StatefulWidget {
 }
 
 class _WidgetTextFieldState extends State<WidgetTextField> {
-  // final edController = TextEditingController();
-
-  void isCHANGED() {
-    // if (edController.text.isNotEmpty) {
-    //   // print("changed txt");
-    //   widget.inputTxt = edController.text;
-    // }
-  }
+  void isCHANGED() {}
 
   // void isChanged(String txt) {
   //   print("controller : ${edController.text}");

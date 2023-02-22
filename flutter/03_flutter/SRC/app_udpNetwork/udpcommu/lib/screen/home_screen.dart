@@ -13,20 +13,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String ipAddress = '';
+  String nonIpAddress = '0.0.0.0';
+  String selIpAddress = '0.0.0.0';
   int portNum = 5000;
   bool isCheckedConnect = false;
 
-  List localIPList = [
-    '0.0.0.0',
-  ];
-
-  final List basicList = [
-    '0,0,0,0',
-  ];
-
-  // final double minWidth = 500;
-  // final double minHight = 100;
+  List<String> localIPList = [];
 
   WidgetTextField ipText = WidgetTextField(
     label: 'IP Address',
@@ -41,15 +33,18 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    setState(() {
+      getNetworkInform();
+    });
   }
 
   void onCheckedConnect() {
     setState(() {
       isCheckedConnect = !isCheckedConnect;
       if (isCheckedConnect) {
-        if (ipText.getData().isNotEmpty) {
-          ipAddress = ipText.getData();
-        }
+        // if (ipText.getData().isNotEmpty) {
+        //   selIpAddress = ipText.getData();
+        // }
         if (portText.getData().isNotEmpty) {
           portNum = int.parse(portText.getData());
         }
@@ -57,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     if (isCheckedConnect) {
-      print("IP/port : $ipAddress / $portNum");
+      print("IP/port : $selIpAddress / $portNum");
     }
   }
 
@@ -69,43 +64,55 @@ class _HomeScreenState extends State<HomeScreen> {
       );
       setState(() {
         localIPList.clear();
-        localIPList.clear();
         for (var i = 0; i < list.length; i++) {
-          // print(list[i].name);
-          // print(list[i].addresses[0].address);
-          localIPList.add("${list[i].name} : ${list[i].addresses[0].address}");
+          localIPList.add(list[i].addresses[0].address);
         }
       });
     } catch (e) {
       //exception
-      localIPList.add("0.0.0.0");
+      localIPList.add(nonIpAddress);
     }
-    print("update ip List : $localIPList");
-    for (var i in localIPList) {
-      print(i);
-    }
+    // print("update ip List : $localIPList");
+    // for (var i in localIPList) {
+    //   print(i);
+    // }
   }
 
-  void onDropBoxChanged() {
-    print('dropbox changed');
-  }
+  // generate dropdownMenuItem
+  List<DropdownMenuItem<String>> generateIPMenu(List<String> list) {
+    print('load generate menu Item');
+    bool checked = false;
+    late List<DropdownMenuItem<String>> l = [];
 
-  List<DropdownMenuItem<Object?>> buildDropdownItems(
-    List items,
-  ) {
-    print('input items Size : ${items.length}');
+    if (list.isEmpty) {
+      l.add(DropdownMenuItem(
+        value: nonIpAddress,
+        child: Text(nonIpAddress),
+      ));
+    } else {
+      for (var i = 0; i < list.length; i++) {
+        l.add(DropdownMenuItem(
+          value: list[i],
+          child: Text(list[i]),
+        ));
 
-    List<DropdownMenuItem<Object?>> list = [];
-
-    for (int i = 0; i < items.length; i++) {
-      list.add(
-        DropdownMenuItem(
-          value: i,
-          child: Text(items[i]),
-        ),
-      );
+        if (selIpAddress.isNotEmpty && (selIpAddress == list[i])) {
+          checked = true;
+        }
+      }
     }
-    return list;
+
+    setState(() {
+      if (list.isEmpty) {
+        selIpAddress = nonIpAddress;
+      } else {
+        if (!checked) {
+          selIpAddress = list[0];
+        }
+      }
+    });
+
+    return l;
   }
 
   @override
@@ -122,28 +129,25 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Expanded(
                   // child: ipText,
-                  child: DropdownButton(
-                    value: ipAddress.isNotEmpty ? ipAddress : "0.0.0.0",
-                    // items: localIPList.map(
-                    //   (String item) {
-                    //     return DropdownMenuItem<String>(
-                    //       value: item,
-                    //       child: Text(item),
-                    //     );
-                    //   },
-                    // ).toList(),
-                    // items: DropdownMenuItem(localIPList),
-
-                    items: buildDropdownItems(localIPList).isNotEmpty
-                        ? buildDropdownItems(localIPList).toList()
-                        : buildDropdownItems(basicList).toList(),
-                    onChanged: (dynamic value) {
-                      setState(
-                        () {
-                          ipAddress = value;
+                  child: Column(
+                    children: [
+                      Container(
+                        alignment: Alignment.bottomLeft,
+                        child: const Text('IP Address'),
+                      ),
+                      DropdownButton(
+                        // icon: const Icon(Icons.network_wifi_1_bar),
+                        items: generateIPMenu(localIPList),
+                        onChanged: (dynamic value) {
+                          setState(() {
+                            selIpAddress = value;
+                          });
                         },
-                      );
-                    },
+                        // hint: const Text('IP Address'),
+                        value: selIpAddress,
+                        isExpanded: true,
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(
@@ -158,6 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 IconButton(
+                  // connect button
                   onPressed: onCheckedConnect,
                   icon: isCheckedConnect
                       ? const Icon(Icons.radio_button_on_rounded)
@@ -165,6 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   iconSize: 40,
                 ),
                 IconButton(
+                  // ip address re-search
                   onPressed: getNetworkInform,
                   icon: const Icon(
                     Icons.refresh_outlined,
@@ -173,10 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 )
               ],
             ),
-            Text('SET : $ipAddress $portNum'),
-            Text(
-              'local? : $localIPList',
-            ),
+            Text('SET : $selIpAddress $portNum'),
           ],
         ),
       ),
