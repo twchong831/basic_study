@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:udpcommu/widgets/log_output_txtwidget.dart';
 import 'package:udpcommu/widgets/text_editor_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -20,10 +21,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<String> localIPList = [];
 
-  WidgetTextField ipText = WidgetTextField(
-    label: 'IP Address',
-    hint: 'xxx.xxx.xxx.xxx',
-  );
   WidgetTextField portText = WidgetTextField(
     label: 'Port Num.',
     hint: '5000',
@@ -38,22 +35,16 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void onCheckedConnect() {
+  bool onCheckedConnect() {
     setState(() {
       isCheckedConnect = !isCheckedConnect;
       if (isCheckedConnect) {
-        // if (ipText.getData().isNotEmpty) {
-        //   selIpAddress = ipText.getData();
-        // }
         if (portText.getData().isNotEmpty) {
           portNum = int.parse(portText.getData());
         }
       }
     });
-
-    if (isCheckedConnect) {
-      print("IP/port : $selIpAddress / $portNum");
-    }
+    return isCheckedConnect;
   }
 
   void getNetworkInform() async {
@@ -72,15 +63,11 @@ class _HomeScreenState extends State<HomeScreen> {
       //exception
       localIPList.add(nonIpAddress);
     }
-    // print("update ip List : $localIPList");
-    // for (var i in localIPList) {
-    //   print(i);
-    // }
   }
 
   // generate dropdownMenuItem
   List<DropdownMenuItem<String>> generateIPMenu(List<String> list) {
-    print('load generate menu Item');
+    // print('load generate menu Item');
     bool checked = false;
     late List<DropdownMenuItem<String>> l = [];
 
@@ -113,6 +100,28 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     return l;
+  }
+
+  // get some Value from materialpageroute
+  _navigateAndDisplayOutput(BuildContext context) async {
+    if (isCheckedConnect) {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => LogOutputWidget(
+            selIpAddress: selIpAddress,
+            portNum: portNum,
+          ),
+        ),
+      );
+      setState(() {
+        if (isCheckedConnect) {
+          isCheckedConnect = false;
+        }
+
+        if (!isCheckedConnect) {}
+      });
+    }
   }
 
   @override
@@ -163,7 +172,11 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 IconButton(
                   // connect button
-                  onPressed: onCheckedConnect,
+                  onPressed: () {
+                    onCheckedConnect()
+                        ? _navigateAndDisplayOutput(context)
+                        : () {};
+                  },
                   icon: isCheckedConnect
                       ? const Icon(Icons.radio_button_on_rounded)
                       : const Icon(Icons.radio_button_off_rounded),
