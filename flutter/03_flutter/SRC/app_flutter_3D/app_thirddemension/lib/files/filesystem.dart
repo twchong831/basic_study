@@ -86,19 +86,19 @@ class FileSystem {
     final File file = filePath;
 
     if (file.existsSync()) {
-      print("file exist ${file.path}");
       try {
         Stream<String> contents = file
             .openRead()
             .transform(utf8.decoder)
             .transform(const LineSplitter());
-
-        print('load result : ${contents.length}');
+        // file.deleteSync(); //delete file
         return contents;
       } catch (e) {
         print('Error : $e');
         return const Stream.empty();
       }
+    } else {
+      print("file not exists ${filePath.path}");
     }
     return const Stream.empty();
   }

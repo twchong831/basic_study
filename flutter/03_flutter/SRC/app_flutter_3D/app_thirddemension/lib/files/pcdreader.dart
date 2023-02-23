@@ -14,9 +14,7 @@ class PCDReader {
   });
 
   Future<List<String>> _readFromFile() async {
-    print('read pcd');
     setBasePath();
-    print("check path $path");
 
     mFiles.setLocalPath(path);
     mFiles.setFileName('pointcloud_log.pcd');
@@ -27,23 +25,24 @@ class PCDReader {
   }
 
   Future<List<Point3D>> read(String filename) async {
-    final strs = _readFromFile().whenComplete(() => null);
-
-    // print(strs.length);
-
     List<Point3D> pc = [];
+    final strs = await _readFromFile();
 
-    for (var x = 0; x < 10; x++) {
-      for (var y = 0; y < 10; y++) {
-        for (var z = 0; z < 10; z++) {
-          pc.add(Point3D(vector.Vector3(
-            x.toDouble(),
-            y.toDouble(),
-            z.toDouble(),
-          )));
+    if (strs.isNotEmpty) {
+      print(strs.length);
+      for (var x = 0; x < 10; x++) {
+        for (var y = 0; y < 10; y++) {
+          for (var z = 0; z < 10; z++) {
+            pc.add(Point3D(vector.Vector3(
+              x.toDouble(),
+              y.toDouble(),
+              z.toDouble(),
+            )));
+          }
         }
       }
     }
+
     return pc;
   }
 
