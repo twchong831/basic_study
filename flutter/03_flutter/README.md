@@ -44,6 +44,15 @@ flutter create [project_name]
 
 ## FUNC
 
+### get
+
+```dart
+  Future<String> get _localPath async {
+    final directory = await getApplicationDocumentsDirectory();
+    return directory.path;
+  }
+```
+
 ### how to make widget using vscode
 
 ```dart
@@ -91,3 +100,22 @@ dependencies:
 - wifi 네트워크 정보 획득
 
 [링크](https://pub.dev/packages/network_info_plus)
+
+## Authorization
+
+### mac OS
+
+- 권한을 부여해주어야 파일을 제어하거나 할 수 있음
+- 해당 폴더에 추가하고자 하는 권한을 아래 리스트에서 찾아서 추가
+
+```powershell
+/project/macos/Runner/DebugProfile.entitlements
+```
+
+```json
+<key>com.apple.security.files.user-selected.read-write</key>
+```
+
+#### list
+
+[리스트 링크](https://developer.apple.com/documentation/bundleresources/entitlements/app_sandbox)
