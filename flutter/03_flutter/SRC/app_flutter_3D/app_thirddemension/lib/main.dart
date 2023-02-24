@@ -1,4 +1,4 @@
-import 'package:app_thirddemension/files/pcdreader.dart';
+import 'package:app_thirddemension/files/pcd_reader.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -32,7 +32,6 @@ class _MyAppState extends State<MyApp> {
           children: [
             TextButton(
               onPressed: () async {
-                print('press');
                 final points = await pcdReader.read('');
                 print('check generate point : ${points.length}');
                 setState(() {});
