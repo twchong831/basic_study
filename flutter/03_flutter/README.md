@@ -53,6 +53,25 @@ flutter create [project_name]
   }
 ```
 
+### List sort
+
+- 사용자의 정의에 따라 list 내의 항목을 정렬할 수 있음.
+- split(RegExp(r'[(-)]'))는 list 내 원소의 ( ) 사이의 값을 기준으로 추출함.
+
+```dart
+list.sort(
+    (a, b) {
+        List<String> la = a.split(RegExp(r'[(-)]'));
+        List<String> lb = b.split(RegExp(r'[(-)]'));
+        if (int.parse(la[1]) > int.parse(lb[1])) {
+            return 1;
+        } else {
+            return -1;
+        }
+    },
+};
+```
+
 ### how to make widget using vscode
 
 ```dart
