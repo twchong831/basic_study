@@ -1,7 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:get/instance_manager.dart';
-import 'package:get/route_manager.dart';
-import 'package:get/state_manager.dart';
+import 'package:get/get.dart';
+import 'package:get_dev_tester/get_controller.dart';
+import 'package:get_dev_tester/widget_new.dart';
 
 void main() {
   runApp(const GetMaterialApp(
@@ -41,13 +43,74 @@ class ReactiveController extends GetxController {
   increase() => counter++;
 }
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  // int counter = 0;
+  final CounterController counterCon = Get.put(CounterController());
+
+  // late MyWidget mWidget;
+
+  bool checkedTimer = false;
+  var settedValue = 0;
+
+  // timer
+  late Timer gTimer;
+
+  void _timerPlayer(Timer timer) {
+    print('timer Tick ${timer.tick} : ${counterCon.count.value}');
+    // counter++;
+    counterCon.increase();
+  }
+
+  void _activeTimer() {
+    if (!checkedTimer) {
+      gTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        _timerPlayer(timer);
+        checkedTimer = true;
+      });
+    } else {
+      _cancelTimer();
+      _activeTimer();
+    }
+  }
+
+  void _cancelTimer() {
+    print('cancel Timer');
+    checkedTimer = false;
+    gTimer.cancel();
+  }
+
+  void setValue(var i) {
+    setState(() {
+      settedValue = i;
+    });
+  }
+
+  _setMyWidget(
+    BuildContext context, {
+    required int counts,
+  }) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MyWidget(
+          value: counts,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     Get.put(Controller()); // 컨트롤러 등록
     Get.put(ReactiveController()); // 반응형 상태관리 controller 등록
+    Get.put(CounterController());
     return Scaffold(
       appBar: AppBar(
         title: const Text('Simple/Reactive State'),
@@ -89,10 +152,53 @@ class Home extends StatelessWidget {
                     ReactiveController.to.increase();
                   },
                   child: Text(
-                      'reative 2 : ${Get.find<ReactiveController>().counter.value}'),
+                    'reative 2 : ${Get.find<ReactiveController>().counter.value}',
+                  ),
                 );
               },
             ),
+            const SizedBox(
+              height: 10,
+            ),
+            // GetX<CounterController>(builder: (controller) {
+            //   return TextButton(
+            //     onPressed: () async {
+            //       _activeTimer();
+            //       RxInt re = await Get.to(
+            //         MyWidget(value: controller.count.value),
+            //         arguments: controller.count,
+            //       );
+            //       // controller.increase();
+            //       setState(() {
+            //         settedValue = re.value;
+            //         _cancelTimer();
+            //         // print('now controll value : ${controller.count.value}');
+            //       });
+            //     },
+            //     child: Text('${controller.count.value}'),
+            //     // child: const Text('test1'),
+            //   );
+            // }),
+            Obx(() {
+              return TextButton(
+                onPressed: () async {
+                  _activeTimer();
+                  RxInt re = await Get.to(
+                    MyWidget(value: Get.find<CounterController>().count.value),
+                    arguments: Get.find<CounterController>().count,
+                  );
+                  // controller.increase();
+                  setState(() {
+                    settedValue = re.value;
+                    _cancelTimer();
+                    // print('now controll value : ${controller.count.value}');
+                  });
+                },
+                child: Text('${Get.find<CounterController>().count.value}'),
+                // child: const Text('test1'),
+              );
+            }),
+            Text('value change : $settedValue'),
           ],
         ),
       ),
