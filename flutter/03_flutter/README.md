@@ -90,7 +90,7 @@ stl + 자동완선
 ##### install
 
 - terminal
-  
+
 ```powershell
 flutter pub add url_launcher
 ```
@@ -107,10 +107,38 @@ dependencies:
 
 - 설정을 해주어야 하는 패키지가 있음
 - ios, 안드로이드 등 운영체제 별로 설정해주어야 함.
-
 - ios : /project/ios/Runner/Base.Iproj/Info.plist에 추가
-
 - 추가 후, 디버깅 중이라면 디버깅을 새로해야함.
+
+### class
+
+#### implements
+
+- 다른 클래스에서 정의된 변수값을 인터페이스로 사용
+- 클래스의 멤버 변수, 함수, 생성자 등의 구현이 필수적임
+
+```dart
+abstract class Person {
+    Person(this.name);
+    final String name;
+    String sex();
+    String age();
+    String eat() => '$name eats nothing';
+    String say() => '$name says somethigs';
+}
+
+class SomePerson implements Person{
+    @override
+    String get name => 'who';
+
+    @override
+    String age() => '$name is 20';
+
+    
+}
+```
+
+#### extends
 
 ## PACKAGE
 
