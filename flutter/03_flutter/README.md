@@ -150,6 +150,9 @@ class SomePerson implements Person{
 
 ## Authorization
 
+[참조](https://velog.io/@error/Flutter-%EC%95%B1-%EA%B6%8C%ED%99%98-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0)
+[android](https://developer.android.com/reference/android/Manifest.permission)
+
 ### mac OS
 
 - 권한을 부여해주어야 파일을 제어하거나 할 수 있음
