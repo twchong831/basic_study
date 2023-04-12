@@ -17,6 +17,13 @@ THANKS to [nomadcoder](https://nomadcoders.co/)
   - 참조하여 개발환경 세팅 필요
 - 또는 [dartpad](https://dartpad.dev/?) 웹사이트를 이용한 코딩 가능
 
+## 개발환경 세팅
+
+```bash
+# import error
+dart pub get
+```
+
 ## dart 내용 정리
 
 ### print

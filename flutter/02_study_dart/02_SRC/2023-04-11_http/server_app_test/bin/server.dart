@@ -1,32 +1,54 @@
+// Copyright (c) 2021, the Dart project authors. Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
+
 import 'dart:io';
 
 import 'package:shelf/shelf.dart';
-import 'package:shelf/shelf_io.dart';
-import 'package:shelf_router/shelf_router.dart';
+import 'package:shelf/shelf_io.dart' as shelf_io;
+import 'package:shelf_router/shelf_router.dart' as shelf_router;
+import 'package:shelf_static/shelf_static.dart' as shelf_static;
 
-// Configure routes.
-final _router = Router()
-  ..get('/', _rootHandler)
-  ..get('/echo/<message>', _echoHandler);
+String nowIp = '';
+int portNum = 0;
 
-Response _rootHandler(Request req) {
-  return Response.ok('Hello, World!\n');
-}
-
-Response _echoHandler(Request request) {
-  final message = request.params['message'];
-  return Response.ok('$message\n');
-}
-
-void main(List<String> args) async {
-  // Use any available host or container IP (usually `0.0.0.0`).
-  final ip = InternetAddress('192.168.1.1');
-
-  // Configure a pipeline that logs requests.
-  final handler = Pipeline().addMiddleware(logRequests()).addHandler(_router);
-
-  // For running in containers, we respect the PORT environment variable.
+Future<void> main() async {
+  // If the "PORT" environment variable is set, listen to it. Otherwise, 8080.
   final port = int.parse(Platform.environment['PORT'] ?? '8080');
-  final server = await serve(handler, ip, port);
-  print('Server listening on port ${server.port}');
+  final cascade = Cascade()
+      // First, serve files from the 'public' directory
+      .add(_staticHandler)
+      // If a corresponding file is not found, send requests to a `Router`
+      .add(_router);
+
+  final server = await shelf_io.serve(
+    logRequests().addHandler(cascade.handler),
+    InternetAddress.anyIPv4, // Allows external connections
+    port,
+  );
+
+  nowIp = server.address.host;
+  portNum = port;
+
+  print('Serving at http://${server.address.host}:${server.port}');
+
+  // Used for tracking uptime of the demo server.
+  // _watch.start();
 }
+
+// Serve files from the file system.
+final _staticHandler = shelf_static.createStaticHandler(
+    'flutter/web_embedded/build/web',
+    defaultDocument: 'index.html');
+// final _staticHandler =
+//     shelf_static.createStaticHandler('public', defaultDocument: 'index.html');
+
+// Router instance to handler requests.
+final _router = shelf_router.Router()
+  ..get('/helloworld', _helloWorldHandler)
+  ..get('/ipport', _ipPortHandler);
+
+Response _helloWorldHandler(Request request) => Response.ok('Hello, World!');
+
+Response _ipPortHandler(Request request) =>
+    Response.ok('IP : $nowIp, port : $portNum');
