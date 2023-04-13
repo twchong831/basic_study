@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:web_embedded/widget/widget_tab.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,8 +13,10 @@ class _HomeScreenState extends State<HomeScreen> {
   // variables====================================
   // hello button response
   String helloResponse = 'None-response';
-  // ip&port button reponse
+  // ip&port button response
   String ipResponse = 'None-response';
+  // ip search button response
+  String ipSearchResponse = 'None-response';
 
   // communication http server
   final dio = Dio();
@@ -172,7 +175,88 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: 10,
               ),
             ],
-          )
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    // padding: const EdgeInsets.all(30),
+                    shadowColor: Colors.black,
+                    backgroundColor: Colors.amber,
+                    shape: const BeveledRectangleBorder(
+                      side: BorderSide(
+                        color: Colors.black,
+                        width: 2,
+                      ),
+                    ),
+                    alignment: Alignment.center,
+                  ),
+                  onPressed: () async {
+                    Response respon = await dio.get(
+                      '/ipSearch',
+                    );
+                    // print(respon);
+                    setState(() {
+                      // response OK
+                      if (respon.statusCode == 200) {}
+                      // print('response : $respon');
+                      ipSearchResponse = 'data : ${respon.data}';
+                      ipSearchResponse += '\n---------\n';
+                      ipSearchResponse += 'extra : ${respon.extra}';
+                      ipSearchResponse += '\n---------\n';
+                      ipSearchResponse += 'headers : ${respon.headers}';
+                      ipSearchResponse += '\n---------\n';
+                      ipSearchResponse += 'status code : ${respon.statusCode}';
+                      ipSearchResponse += '\n---------\n';
+                      ipSearchResponse +=
+                          'status msg : ${respon.statusMessage}';
+                      ipSearchResponse += '\n---------\n';
+                    });
+                  },
+                  child: const Center(
+                    heightFactor: 2.0,
+                    child: Text(
+                      'IP Search Button',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 30,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 15,
+              ),
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(30)),
+                    border: Border.all(
+                      color: Colors.black,
+                    ),
+                  ),
+                  height: 100,
+                  alignment: Alignment.center,
+                  child: Text(
+                    ipSearchResponse,
+                    style: const TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+            ],
+          ),
+          Expanded(child: NetworkTabWidget()),
         ],
       ),
     );

@@ -2,8 +2,10 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:process_run/shell_run.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_router/shelf_router.dart' as shelf_router;
@@ -11,6 +13,32 @@ import 'package:shelf_static/shelf_static.dart' as shelf_static;
 
 String nowIp = '';
 int portNum = 0;
+
+class JsonNetworkModel {
+  final String name;
+  final String ip;
+  final String _netmask;
+  final String _gateway;
+
+  static String _convertIP2gateway(String ip) {
+    List<String> ips = ip.split('.');
+    return '${ips[0]}.${ips[1]}.${ips[2]}.1';
+  }
+
+  JsonNetworkModel({
+    required this.name,
+    required this.ip,
+    String? netmask,
+    String? gateway,
+  })  : _netmask = netmask ?? "255.255.255.0",
+        _gateway = gateway ?? _convertIP2gateway(ip);
+
+  JsonNetworkModel.fromJson(Map<String, dynamic> jsonType)
+      : name = jsonType['name'],
+        ip = jsonType['ip'],
+        _netmask = jsonType['netmask'] ?? '255.255.255.0',
+        _gateway = jsonType['gateway'] ?? _convertIP2gateway(jsonType['ip']);
+}
 
 Future<void> main() async {
   // If the "PORT" environment variable is set, listen to it. Otherwise, 8080.
@@ -31,24 +59,85 @@ Future<void> main() async {
   portNum = port;
 
   print('Serving at http://${server.address.host}:${server.port}');
-
-  // Used for tracking uptime of the demo server.
-  // _watch.start();
 }
 
 // Serve files from the file system.
 final _staticHandler = shelf_static.createStaticHandler(
     'flutter/web_embedded/build/web',
     defaultDocument: 'index.html');
-// final _staticHandler =
-//     shelf_static.createStaticHandler('public', defaultDocument: 'index.html');
 
 // Router instance to handler requests.
 final _router = shelf_router.Router()
   ..get('/helloworld', _helloWorldHandler)
-  ..get('/ipport', _ipPortHandler);
+  ..get('/ipport', _ipPortHandler)
+  ..get('/ipSearch', _ipSearchHandler);
 
 Response _helloWorldHandler(Request request) => Response.ok('Hello, World!');
 
 Response _ipPortHandler(Request request) =>
     Response.ok('IP : $nowIp, port : $portNum');
+
+const _jsonHeaders = {
+  'content-type': 'application/json',
+};
+
+String _jsonEncode(Object? data) =>
+    const JsonEncoder.withIndent(' ').convert(data);
+
+Future<Response> _ipSearchHandler(Request request) async {
+  List<NetworkInterface> ips = await _getNetworkInform();
+
+  // make json list of Network information
+  List<Map<String, dynamic>> jsonList = [];
+  for (var i in ips) {
+    jsonList.add({
+      'name': i.name,
+      'ip': i.addresses[0].address,
+      // 'netmask': i.addresses
+    });
+  }
+
+  // shell
+  var shell = Shell();
+  var shellResult = await shell.run('ifconfig');
+  print('shell : ${shellResult.length}');
+  print('shell : ${shellResult[0].outText}');
+
+  var jsonResult = jsonEncode(jsonList);
+  print(jsonResult);
+
+  // decode
+  List jsonListDe = jsonDecode(jsonResult);
+  print(jsonListDe);
+
+  print(jsonListDe.length);
+
+  // return Response.ok('$ips');
+  return Response(
+    200,
+    headers: {
+      ..._jsonHeaders,
+      'Cache-Control': 'no-store',
+    },
+    body: jsonResult,
+  );
+}
+
+// get Network IP List
+Future<List<NetworkInterface>> _getNetworkInform() async {
+  List<NetworkInterface> ipList = [];
+  try {
+    final list = await NetworkInterface.list(
+      includeLoopback: true,
+      type: InternetAddressType.IPv4,
+    );
+    for (var i = 0; i < list.length; i++) {
+      print('search ${list[i].addresses[0].address}');
+      ipList.add(list[i]);
+    }
+  } catch (e) {
+    //exception
+  }
+
+  return ipList;
+}

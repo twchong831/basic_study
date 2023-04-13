@@ -1,3 +1,34 @@
+# http server and web gui
+
+## Source code
+
+```dart
+const _jsonHeaders = {
+  'content-type': 'application/json',
+};
+
+String _jsonEncode(Object? data) =>
+    const JsonEncoder.withIndent(' ').convert(data);
+
+final _dartVersion = () {
+  final version = Platform.version;
+  return version.substring(0, version.indexOf(' '));
+}();
+
+return Response(
+    200,
+    headers: {
+      ..._jsonHeaders,
+      'Cache-Control': 'no-store',
+    },
+    body: _jsonEncode(  // in response.data
+      {
+        'Dart version': _dartVersion,
+      },
+    ),
+  );
+```
+
 A server app built using [Shelf](https://pub.dev/packages/shelf),
 configured to enable running with [Docker](https://www.docker.com/).
 
