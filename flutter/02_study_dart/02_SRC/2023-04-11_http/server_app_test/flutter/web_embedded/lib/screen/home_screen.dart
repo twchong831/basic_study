@@ -256,7 +256,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          Expanded(child: NetworkTabWidget()),
+          NetworkTabWidget(),
         ],
       ),
     );
