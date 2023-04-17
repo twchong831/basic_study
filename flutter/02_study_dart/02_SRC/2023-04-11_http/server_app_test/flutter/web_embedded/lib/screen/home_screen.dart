@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:web_embedded/widget/widget_tab.dart';
@@ -17,6 +19,11 @@ class _HomeScreenState extends State<HomeScreen> {
   String ipResponse = 'None-response';
   // ip search button response
   String ipSearchResponse = 'None-response';
+  // ip information get..
+  bool _checkedIPget = false;
+
+  // Json for Network information
+  late List networkInformation;
 
   // communication http server
   final dio = Dio();
@@ -202,20 +209,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                     // print(respon);
                     setState(() {
-                      // response OK
-                      if (respon.statusCode == 200) {}
+                      // ipSearchResponse = '$respon.statusCode';
                       // print('response : $respon');
-                      ipSearchResponse = 'data : ${respon.data}';
-                      ipSearchResponse += '\n---------\n';
-                      ipSearchResponse += 'extra : ${respon.extra}';
-                      ipSearchResponse += '\n---------\n';
-                      ipSearchResponse += 'headers : ${respon.headers}';
-                      ipSearchResponse += '\n---------\n';
-                      ipSearchResponse += 'status code : ${respon.statusCode}';
-                      ipSearchResponse += '\n---------\n';
-                      ipSearchResponse +=
-                          'status msg : ${respon.statusMessage}';
-                      ipSearchResponse += '\n---------\n';
+                      // ipSearchResponse = 'data : ${respon.data}';
+                      // ipSearchResponse += '\n---------\n';
+                      // ipSearchResponse += 'extra : ${respon.extra}';
+                      // ipSearchResponse += '\n---------\n';
+                      // ipSearchResponse += 'headers : ${respon.headers}';
+                      // ipSearchResponse += '\n---------\n';
+                      // ipSearchResponse += 'status code : ${respon.statusCode}';
+                      // ipSearchResponse += '\n---------\n';
+                      // ipSearchResponse +=
+                      //     'status msg : ${respon.statusMessage}';
+                      // ipSearchResponse += '\n---------\n';
+
+                      // response OK
+                      ipSearchResponse = respon.data;
+                      networkInformation = jsonDecode(ipSearchResponse);
+                      _checkedIPget = true;
                     });
                   },
                   child: const Center(
@@ -256,7 +267,11 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          NetworkTabWidget(),
+          _checkedIPget
+              ? NetworkTabWidget(
+                  json: networkInformation,
+                )
+              : NetworkTabWidget(),
         ],
       ),
     );

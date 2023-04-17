@@ -43,9 +43,17 @@ class JsonNetworkModel {
 Future<void> main() async {
   // If the "PORT" environment variable is set, listen to it. Otherwise, 8080.
   final port = int.parse(Platform.environment['PORT'] ?? '8080');
+
+// Serve files from the file system.
+  String basePath = Directory.current.path;
+  print(basePath);
+  final staticHandler = shelf_static.createStaticHandler(
+      '$basePath/flutter/web_embedded/build/web',
+      defaultDocument: 'index.html');
+
   final cascade = Cascade()
       // First, serve files from the 'public' directory
-      .add(_staticHandler)
+      .add(staticHandler)
       // If a corresponding file is not found, send requests to a `Router`
       .add(_router);
 
@@ -60,11 +68,6 @@ Future<void> main() async {
 
   print('Serving at http://${server.address.host}:${server.port}');
 }
-
-// Serve files from the file system.
-final _staticHandler = shelf_static.createStaticHandler(
-    'flutter/web_embedded/build/web',
-    defaultDocument: 'index.html');
 
 // Router instance to handler requests.
 final _router = shelf_router.Router()
@@ -101,7 +104,7 @@ Future<Response> _ipSearchHandler(Request request) async {
   var shell = Shell();
   var shellResult = await shell.run('ifconfig');
   print('shell : ${shellResult.length}');
-  print('shell : ${shellResult[0].outText}');
+  // print('shell : ${shellResult[0].outText}');
 
   var jsonResult = jsonEncode(jsonList);
   print(jsonResult);
@@ -132,7 +135,7 @@ Future<List<NetworkInterface>> _getNetworkInform() async {
       type: InternetAddressType.IPv4,
     );
     for (var i = 0; i < list.length; i++) {
-      print('search ${list[i].addresses[0].address}');
+      // print('search ${list[i].addresses[0].address}');
       ipList.add(list[i]);
     }
   } catch (e) {

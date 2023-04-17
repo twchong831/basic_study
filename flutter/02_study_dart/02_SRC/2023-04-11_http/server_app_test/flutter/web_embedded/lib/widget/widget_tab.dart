@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 class NetworkTabWidget extends StatefulWidget {
-  final List<Map<String, dynamic>> _json;
+  final List _json;
 
   NetworkTabWidget({
     super.key,
-    List<Map<String, dynamic>>? json,
+    List? json,
   }) : _json = json ??
             [
               {'name': 'none', 'ip': 'none'},
@@ -25,7 +25,6 @@ class _NetworkTabWidgetState extends State<NetworkTabWidget>
   // tabContainer controller
   late final TabController _tabController;
 
-  int _tabSelectIndex = 0;
   List<String> nameList = [];
   String selectIP = '';
   String selectName = '';
@@ -53,12 +52,18 @@ class _NetworkTabWidgetState extends State<NetworkTabWidget>
               Row(
                 children: [
                   const Text('Name'),
+                  const SizedBox(
+                    width: 10,
+                  ),
                   Text(i['name']),
                 ],
               ),
               Row(
                 children: [
                   const Text('IP'),
+                  const SizedBox(
+                    width: 10,
+                  ),
                   Text(i['ip']),
                 ],
               ),
@@ -106,9 +111,7 @@ class _NetworkTabWidgetState extends State<NetworkTabWidget>
               indicatorColor: Colors.red,
               labelColor: Colors.black,
               onTap: (value) {
-                setState(() {
-                  _tabSelectIndex = value;
-                });
+                setState(() {});
               },
               tabs: tabMaker(),
             ),
