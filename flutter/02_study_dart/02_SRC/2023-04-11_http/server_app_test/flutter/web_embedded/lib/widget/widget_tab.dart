@@ -1,18 +1,21 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:web_embedded/data/json_network_model.dart';
 
 const String staticJson =
     '[{"name": "none", "ip": "none"}, {"name": "none2", "ip": "none2"}]';
 
 class NetworkTabWidget extends StatefulWidget {
   // final List _json;
-  final String jSon;
+  // final String jSon;
+  List<JsonNetworkModel> model;
 
-  const NetworkTabWidget({
+  NetworkTabWidget({
     super.key,
-    String? json,
-  }) : jSon = json ?? staticJson;
+    // String? json,
+    required this.model,
+  }) /*: jSon = json ?? staticJson*/;
 
   @override
   State<NetworkTabWidget> createState() => _NetworkTabWidgetState();
@@ -31,6 +34,7 @@ class _NetworkTabWidgetState extends State<NetworkTabWidget>
 
   tabMaker() {
     List<Tab> tabs = [];
+    // print(' input ? ${widget.jSon}');
     for (var i in listJson) {
       tabs.add(Tab(
         text: i['name'],
@@ -42,32 +46,52 @@ class _NetworkTabWidgetState extends State<NetworkTabWidget>
   List<Widget> tabViewMaker(List json) {
     List<Widget> tabs = [];
 
-    print('make widget $json');
     for (var i in json) {
       tabs.add(
-        Container(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  const Text('Name'),
-                  const SizedBox(
-                    width: 10,
+        Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                  color: Colors.red,
+                  child: const Text(
+                    'Name',
                   ),
-                  Text(i['name']),
-                ],
-              ),
-              Row(
-                children: [
-                  const Text('IP'),
-                  const SizedBox(
-                    width: 10,
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: TextField(
+                    readOnly: true,
+                    controller: TextEditingController(
+                      text: i['name'],
+                    ),
                   ),
-                  Text(i['ip']),
-                ],
-              ),
-            ],
-          ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                const Text('IP'),
+                const SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: TextField(
+                    controller: TextEditingController(
+                      text: i['ip'],
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        i['ip'] = value;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       );
     }
@@ -76,12 +100,15 @@ class _NetworkTabWidgetState extends State<NetworkTabWidget>
 
   // udpate List
   void updateList() {
-    try {
-      listJson = jsonDecode(widget.jSon);
-    } catch (e) {
+    if (widget.model.isNotEmpty) {
+      for (var i in widget.model) {
+        listJson.add({'name': i.name, 'ip': i.ip});
+      }
+    } else {
       listJson = jsonDecode(staticJson);
     }
 
+    nameList.clear();
     for (var i in listJson) {
       nameList.add(i['name']);
     }
@@ -99,7 +126,6 @@ class _NetworkTabWidgetState extends State<NetworkTabWidget>
   @override
   void initState() {
     super.initState();
-    print('init...[widget_tab]');
     updateList();
   }
 
@@ -117,14 +143,11 @@ class _NetworkTabWidgetState extends State<NetworkTabWidget>
               indicatorColor: Colors.red,
               labelColor: Colors.black,
               onTap: (value) {
-                setState(() {
-                  print(listJson[value]);
-                });
+                setState(() {});
               },
               tabs: tabMaker(),
             ),
           ),
-          // const Text('te'),
           Expanded(
             child: TabBarView(
               controller: _tabController,

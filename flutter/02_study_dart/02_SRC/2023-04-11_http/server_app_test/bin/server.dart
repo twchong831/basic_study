@@ -93,8 +93,8 @@ Future<Response> _ipSearchHandler(Request request) async {
   List<Map<String, dynamic>> jsonList = [];
   for (var i in ips) {
     jsonList.add({
-      'name': i.name,
-      'ip': i.addresses[0].address,
+      "name": i.name,
+      "ip": i.addresses[0].address,
       // 'netmask': i.addresses
     });
   }
@@ -109,8 +109,8 @@ Future<Response> _ipSearchHandler(Request request) async {
   print(jsonResult);
 
   // decode
-  // List jsonListDe = jsonDecode(jsonResult);
-  // print(jsonListDe);
+  List jsonListDe = jsonDecode(jsonResult);
+  print(jsonListDe);
 
   // print(jsonListDe.length);
 
@@ -122,6 +122,7 @@ Future<Response> _ipSearchHandler(Request request) async {
       'Cache-Control': 'no-store',
     },
     body: jsonResult,
+    // body: '$jsonListDe',
   );
 }
 

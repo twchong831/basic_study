@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:web_embedded/data/json_network_model.dart';
 import 'package:web_embedded/widget/widget_tab.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,9 +20,10 @@ class _HomeScreenState extends State<HomeScreen> {
   String ipResponse = 'None-response';
   // ip search button response
   String ipSearchResponse = 'None-response';
-  String networkJson = '';
 
   bool checkIpListUpdate = false;
+
+  late List<JsonNetworkModel> listNetworkJson;
 
   // communication http server
   final dio = Dio();
@@ -203,16 +207,31 @@ class _HomeScreenState extends State<HomeScreen> {
                     Response respon = await dio.get(
                       '/ipSearch',
                     );
+
+                    // for test
+                    List<Map<String, dynamic>> jsonList = [];
+                    jsonList.add({
+                      'name': 'eno0',
+                      'ip': '127.1.2.3',
+                    });
+                    // !for test
                     setState(() {
                       // response OK
-                      ipSearchResponse = '$respon';
+                      ipSearchResponse = respon.data;
 
-                      //test
-                      ipSearchResponse =
-                          '[{"name": "lo", "ip": "127.0.0.1"},{"name": "wlp3s0", "ip": "10.26.248.7"},{"name": "docker0", "ip": "172.17.0.1"}]';
+                      // listNetworkJson =
+                      //     (respon.data).map<JsonNetworkModel>((json) {
+                      //   return JsonNetworkModel.fromJson(json);
+                      // }).toList();
 
-                      networkJson =
-                          '[{"name": "lo", "ip": "127.0.0.1"},{"name": "wlp3s0", "ip": "10.26.248.7"},{"name": "docker0", "ip": "172.17.0.1"}]';
+                      // for test
+                      ipSearchResponse = jsonEncode(jsonList);
+
+                      listNetworkJson =
+                          (jsonList).map<JsonNetworkModel>((json) {
+                        return JsonNetworkModel.fromJson(json);
+                      }).toList();
+                      // !for test
 
                       checkIpListUpdate = true;
                     });
@@ -255,10 +274,12 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          NetworkTabWidget(
-            // json: ipSearchResponse,
-            json: networkJson,
-          ),
+          checkIpListUpdate
+              ? NetworkTabWidget(
+                  // jSon: networkJson,
+                  model: listNetworkJson,
+                )
+              : Container(),
         ],
       ),
     );
