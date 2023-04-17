@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:web_embedded/widget/widget_tab.dart';
@@ -19,11 +17,9 @@ class _HomeScreenState extends State<HomeScreen> {
   String ipResponse = 'None-response';
   // ip search button response
   String ipSearchResponse = 'None-response';
-  // ip information get..
-  bool _checkedIPget = false;
+  String networkJson = '';
 
-  // Json for Network information
-  late List networkInformation;
+  bool checkIpListUpdate = false;
 
   // communication http server
   final dio = Dio();
@@ -207,26 +203,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     Response respon = await dio.get(
                       '/ipSearch',
                     );
-                    // print(respon);
                     setState(() {
-                      // ipSearchResponse = '$respon.statusCode';
-                      // print('response : $respon');
-                      // ipSearchResponse = 'data : ${respon.data}';
-                      // ipSearchResponse += '\n---------\n';
-                      // ipSearchResponse += 'extra : ${respon.extra}';
-                      // ipSearchResponse += '\n---------\n';
-                      // ipSearchResponse += 'headers : ${respon.headers}';
-                      // ipSearchResponse += '\n---------\n';
-                      // ipSearchResponse += 'status code : ${respon.statusCode}';
-                      // ipSearchResponse += '\n---------\n';
-                      // ipSearchResponse +=
-                      //     'status msg : ${respon.statusMessage}';
-                      // ipSearchResponse += '\n---------\n';
-
                       // response OK
-                      ipSearchResponse = respon.data;
-                      networkInformation = jsonDecode(ipSearchResponse);
-                      _checkedIPget = true;
+                      ipSearchResponse = '$respon';
+
+                      //test
+                      ipSearchResponse =
+                          '[{"name": "lo", "ip": "127.0.0.1"},{"name": "wlp3s0", "ip": "10.26.248.7"},{"name": "docker0", "ip": "172.17.0.1"}]';
+
+                      networkJson =
+                          '[{"name": "lo", "ip": "127.0.0.1"},{"name": "wlp3s0", "ip": "10.26.248.7"},{"name": "docker0", "ip": "172.17.0.1"}]';
+
+                      checkIpListUpdate = true;
                     });
                   },
                   child: const Center(
@@ -267,11 +255,10 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          _checkedIPget
-              ? NetworkTabWidget(
-                  json: networkInformation,
-                )
-              : NetworkTabWidget(),
+          NetworkTabWidget(
+            // json: ipSearchResponse,
+            json: networkJson,
+          ),
         ],
       ),
     );

@@ -5,7 +5,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:process_run/shell_run.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_router/shelf_router.dart' as shelf_router;
@@ -101,19 +100,19 @@ Future<Response> _ipSearchHandler(Request request) async {
   }
 
   // shell
-  var shell = Shell();
-  var shellResult = await shell.run('ifconfig');
-  print('shell : ${shellResult.length}');
+  // var shell = Shell();
+  // var shellResult = await shell.run('ifconfig');
+  // print('shell : ${shellResult.length}');
   // print('shell : ${shellResult[0].outText}');
 
   var jsonResult = jsonEncode(jsonList);
   print(jsonResult);
 
   // decode
-  List jsonListDe = jsonDecode(jsonResult);
-  print(jsonListDe);
+  // List jsonListDe = jsonDecode(jsonResult);
+  // print(jsonListDe);
 
-  print(jsonListDe.length);
+  // print(jsonListDe.length);
 
   // return Response.ok('$ips');
   return Response(

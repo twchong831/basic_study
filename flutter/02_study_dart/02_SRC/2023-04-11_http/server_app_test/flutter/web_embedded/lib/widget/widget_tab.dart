@@ -2,19 +2,17 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-class NetworkTabWidget extends StatefulWidget {
-  final List _json;
+const String staticJson =
+    '[{"name": "none", "ip": "none"}, {"name": "none2", "ip": "none2"}]';
 
-  NetworkTabWidget({
+class NetworkTabWidget extends StatefulWidget {
+  // final List _json;
+  final String jSon;
+
+  const NetworkTabWidget({
     super.key,
-    List? json,
-  }) : _json = json ??
-            [
-              {'name': 'none', 'ip': 'none'},
-              {'name': 'none2', 'ip': 'none2'},
-              // {'name': 'none2', 'ip': 'none2'},
-              // {'name': 'none2', 'ip': 'none2'},
-            ];
+    String? json,
+  }) : jSon = json ?? staticJson;
 
   @override
   State<NetworkTabWidget> createState() => _NetworkTabWidgetState();
@@ -41,10 +39,11 @@ class _NetworkTabWidgetState extends State<NetworkTabWidget>
     return tabs;
   }
 
-  List<Widget> tabViewMaker() {
+  List<Widget> tabViewMaker(List json) {
     List<Widget> tabs = [];
 
-    for (var i in listJson) {
+    print('make widget $json');
+    for (var i in json) {
       tabs.add(
         Container(
           child: Column(
@@ -75,13 +74,13 @@ class _NetworkTabWidgetState extends State<NetworkTabWidget>
     return tabs;
   }
 
-  @override
-  void initState() {
-    super.initState();
-
-    var jsonConvert = jsonEncode(widget._json);
-
-    listJson = jsonDecode(jsonConvert);
+  // udpate List
+  void updateList() {
+    try {
+      listJson = jsonDecode(widget.jSon);
+    } catch (e) {
+      listJson = jsonDecode(staticJson);
+    }
 
     for (var i in listJson) {
       nameList.add(i['name']);
@@ -98,6 +97,13 @@ class _NetworkTabWidgetState extends State<NetworkTabWidget>
   }
 
   @override
+  void initState() {
+    super.initState();
+    print('init...[widget_tab]');
+    updateList();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Column(
@@ -111,7 +117,9 @@ class _NetworkTabWidgetState extends State<NetworkTabWidget>
               indicatorColor: Colors.red,
               labelColor: Colors.black,
               onTap: (value) {
-                setState(() {});
+                setState(() {
+                  print(listJson[value]);
+                });
               },
               tabs: tabMaker(),
             ),
@@ -120,7 +128,7 @@ class _NetworkTabWidgetState extends State<NetworkTabWidget>
           Expanded(
             child: TabBarView(
               controller: _tabController,
-              children: tabViewMaker(),
+              children: tabViewMaker(listJson),
             ),
           ),
         ],
