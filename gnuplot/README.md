@@ -153,7 +153,7 @@ plot "out_bar.txt"	using 2:xtic(1) title "signal 1",\
 
 - data histogram 스타일로 세팅하게 되면 한 지점에 여러개의 막대 그래프를 그릴 수 있음
 
-![막대 그래프 여러개](image\basic\basic_graph_box_mulit.png)
+![막대 그래프 여러개](image/basic/basic_graph_box_mulit.png)
 
 ### 그래프 스타일 지정
 
@@ -171,7 +171,7 @@ plot	"out.txt" using 1:2 title "signal 1" lt rgb "red" with lines, \
   - 색 이름, 색 코드를 통해 색상 지정이 가능함
 - lt 1/2 : gnuplot에 지정된 스타일을 사용
 
-![그래프 스타일 지정](image\basic\basic_mulit_graph_linetype.png)
+![그래프 스타일 지정](image/basic/basic_mulit_graph_linetype.png)
 
 ```makefile
 plot	"out.txt" using 1:2 title "signal 1" lt rgb "red" with points, \
@@ -180,7 +180,7 @@ plot	"out.txt" using 1:2 title "signal 1" lt rgb "red" with points, \
 		"" using 1:5 title "signal 4" lt 2 with points 
 ```
 
-![라인타입 포인트 그래프](image\basic\basic_mulit_graph_linetype_point.png)
+![라인타입 포인트 그래프](image/basic/basic_mulit_graph_linetype_point.png)
 
 - 위 그래프는 lt를 포인트 그래프에 적용한 결과
 - signal1과 signal3이, signal 2와 signal4가 같은 모양의 도트를 가지는데 색이 다른 것을 확인할 수 있음
@@ -199,7 +199,7 @@ plot	"out.txt" using 1:2 title "signal 1" ls 1 with points, \
 - ls : Line style, 스타일을 설정
 - 일반적으로 포인트의 모양을 변화
 
-![line style 그래프](image\basic\basic_mulit_graph_linestyle.png)
+![line style 그래프](image/basic/basic_mulit_graph_linestyle.png)
 
 #### Box style
 
@@ -211,9 +211,9 @@ plot	"out.txt" using 1:2 title "signal 1" with boxes
 
 - fill solid : 그래프를 채움, 1.0/0.5로 세팅
 
-![1.0 채움 그래프](image\basic\basic_graph_box_style.png)
+![1.0 채움 그래프](image/basic/basic_graph_box_style.png)
 
-![0.5 채움 그래프](image\basic\basic_graph_box_style_2.png)
+![0.5 채움 그래프](image/basic/basic_graph_box_style_2.png)
 
 ```makefile
 set boxwidth	0.1
@@ -223,7 +223,7 @@ plot	"out_bar.txt" using 1:2 title "signal 1" with boxes fill pattern 1
 - 그래프 별로 패턴 지정
 - fill pattern 숫자 : 숫자 값에 따라 해당 설정값으로 그래프를 출력
 
-![그래프 패턴](image\basic\basic_graph_box_each_style_01.png)
+![그래프 패턴](image/basic/basic_graph_box_each_style_01.png)
 
 ### 선과 포인트 그래프 같이 그리기
 
@@ -237,7 +237,7 @@ plot	"out.txt" using 1:2 title "signal 1" with lp lw 1 lt 1, \
 - lp : linespoints, 선과 점을 같이 표시
 - lw : line width, 선의 굵기
 
-![선과 점 그래프](image\basic\basic_mulit_graph_pointNline.png)
+![선과 점 그래프](image/basic/basic_mulit_graph_pointNline.png)
 
 ## 축 범위 설정
 
@@ -402,7 +402,7 @@ do for [i=363:439]{
   - 조건을 불만족할 경우 NaN 값을 할당
   - NAN 값은 그래프 상에서 출력되지 않음
 
-![조건에 따른 출력 변화](image\pcd\condition_point.png)
+![조건에 따른 출력 변화](image/pcd/condition_point.png)
 
 ####  로그의 색 값으로 출력
 
@@ -545,7 +545,7 @@ set xlabel "x-tics" font ",20" offset 0,-1,0
 set ylabel "y-tics" font ",10" offset 4,0,0
 ```
 
-![xlabel/ylabel](image\label\test_label.png)
+![xlabel/ylabel](image/label/test_label.png)
 
 ### 특정 위치 출력
 
@@ -553,7 +553,7 @@ set ylabel "y-tics" font ",10" offset 4,0,0
 set label "test label" at 2,2
 ```
 
-![라벨위치](image\label\test_label2.png)
+![라벨위치](image/label/test_label2.png)
 
 ### margin
 
@@ -564,7 +564,7 @@ set bmargin 3	#bottom
 set rmargin 4	#right
 ```
 
-![마진변경](image\label\test_label3.png)
+![마진변경](image/label/test_label3.png)
 
 - 마진이 변경됨에 따라 x,y 축의 타이틀이 사라진 것을 확인할 수 있음
 
@@ -578,7 +578,7 @@ set xlabel	"x-tics" font ",20" offset 0,0,0
 set ylabel	"y-tics" font ",40" offset 6,0,0
 ```
 
-![마진 최적화](image\label\test_label4.png)
+![마진 최적화](image/label/test_label4.png)
 
 - 마진 값에 따라 출력되는 범위가 달라지므로,
 - x/y label의 offset 값을 적절히 조절해줄 필요가 있음
@@ -591,4 +591,4 @@ str = gptinf("test label : %g", i)
 set label str at 2,2
 ```
 
-![라벨 숫자입력](image\label\test_label5.png)
+![라벨 숫자입력](image/label/test_label5.png)
