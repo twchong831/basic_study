@@ -58,7 +58,7 @@ pause mouse any "Any key or button will terminate window"
 - signal : 그래프의 타이틀 설정
 - lines : 그래프를 선 형태로 그림
 
-![선 그래프](image\basic\basic_graph_line.png)
+![선 그래프](image/basic/basic_graph_line.png)
 
 #### 선 굵기
 
@@ -75,7 +75,7 @@ plot	"out.txt" using 1:2 title "signal 1" w l lw 1, \
 - gnuplot은 위 코드와 같이 축약어를 사용할 수도 있음
 - 그래프 별로 선 굵기를 다르게 하여 출력
 
-![선 굵기 그래프](image\basic\basic_line_width.png)
+![선 굵기 그래프](image/basic/basic_line_width.png)
 
 ### Points Graph
 
@@ -83,7 +83,7 @@ plot	"out.txt" using 1:2 title "signal 1" w l lw 1, \
 plot	"out.txt" using 1:2 title "signal" with points
 ```
 
-![도트 그래프](image\basic\basic_graph_points.png)
+![도트 그래프](image/basic/basic_graph_points.png)
 
 #### 포인트 크기
 
@@ -97,7 +97,7 @@ plot	"out.txt" using 1:2 title "signal 1" w p ps 1, \
 - p : points
 - ps : point size, 포인트 사이즈 설정
 
-![포인트 사이즈 그래프](image\basic\basic_points_size.png)
+![포인트 사이즈 그래프](image/basic/basic_points_size.png)
 
 ### Box Graph
 
@@ -105,7 +105,7 @@ plot	"out.txt" using 1:2 title "signal 1" w p ps 1, \
 plot	"out.txt" using 1:2 title "signal" with boxes
 ```
 
-![박스 그래프](image\basic\basic_graph_box.png)
+![박스 그래프](image/basic/basic_graph_box.png)
 
 #### 박스 폭
 
@@ -117,7 +117,7 @@ plot	"out.txt" using 1:2 title "signal 1" with boxes
 - set boxwidth : 전체 박스의 폭을 0.5로 지정
 - 위와 같이 상단에 set을 해놓으면 해당 설정이 전체 그래프에 동일하게 적용됨
 
-![박스 폭 그래프](image\basic\basic_graph_box_width.png)
+![박스 폭 그래프](image/basic/basic_graph_box_width.png)
 
 ### 다수의 그래프 그리기
 
@@ -138,7 +138,7 @@ pause mouse any "Any key or button will terminate window"
 - 아래 그래프와 같이 gnuplot에서 자동적으로 그래프 별로 색을 부여하여 식별이 용이하게 만들어줌
 - 이는 point나 bar도 동일
 
-![다수 그래프](image\basic\basic_mulit_graph_line.png)
+![다수 그래프](image/basic/basic_mulit_graph_line.png)
 
 
 
