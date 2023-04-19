@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:web_embedded/screen/home_screen.dart';
+import 'package:web_embedded/screen/home_screen_tab.dart';
 
 void main() {
   runApp(const MaterialApp(
@@ -17,6 +17,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return const HomeScreen();
+    // return const LoadScreen();
+    return const HomeScreenTab();
   }
 }

@@ -70,9 +70,9 @@ Future<void> main() async {
 
 // Router instance to handler requests.
 final _router = shelf_router.Router()
-  ..get('/helloworld', _helloWorldHandler)
-  ..get('/ipport', _ipPortHandler)
-  ..get('/ipSearch', _ipSearchHandler);
+  ..get('/helloworld', _helloWorldHandler) // send 'Hello. World!'
+  ..get('/ipport', _ipPortHandler) // send http server IP & port
+  ..get('/ipSearch', _ipSearchHandler); // send local Network Information
 
 Response _helloWorldHandler(Request request) => Response.ok('Hello, World!');
 
@@ -82,9 +82,6 @@ Response _ipPortHandler(Request request) =>
 const _jsonHeaders = {
   'content-type': 'application/json',
 };
-
-String _jsonEncode(Object? data) =>
-    const JsonEncoder.withIndent(' ').convert(data);
 
 Future<Response> _ipSearchHandler(Request request) async {
   List<NetworkInterface> ips = await _getNetworkInform();
@@ -112,8 +109,6 @@ Future<Response> _ipSearchHandler(Request request) async {
   List jsonListDe = jsonDecode(jsonResult);
   print(jsonListDe);
 
-  // print(jsonListDe.length);
-
   // return Response.ok('$ips');
   return Response(
     200,
@@ -122,7 +117,6 @@ Future<Response> _ipSearchHandler(Request request) async {
       'Cache-Control': 'no-store',
     },
     body: jsonResult,
-    // body: '$jsonListDe',
   );
 }
 
@@ -135,7 +129,6 @@ Future<List<NetworkInterface>> _getNetworkInform() async {
       type: InternetAddressType.IPv4,
     );
     for (var i = 0; i < list.length; i++) {
-      // print('search ${list[i].addresses[0].address}');
       ipList.add(list[i]);
     }
   } catch (e) {

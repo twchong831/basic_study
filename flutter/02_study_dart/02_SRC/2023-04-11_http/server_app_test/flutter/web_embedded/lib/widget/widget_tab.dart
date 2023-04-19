@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:web_embedded/data/json_network_model.dart';
+import 'package:web_embedded/widget/widget_name.dart';
 
 const String staticJson =
     '[{"name": "none", "ip": "none"}, {"name": "none2", "ip": "none2"}]';
@@ -9,9 +10,9 @@ const String staticJson =
 class NetworkTabWidget extends StatefulWidget {
   // final List _json;
   // final String jSon;
-  List<JsonNetworkModel> model;
+  final List<JsonNetworkModel> model;
 
-  NetworkTabWidget({
+  const NetworkTabWidget({
     super.key,
     // String? json,
     required this.model,
@@ -44,52 +45,95 @@ class _NetworkTabWidgetState extends State<NetworkTabWidget>
   }
 
   List<Widget> tabViewMaker(List json) {
+    const double wH = 100;
     List<Widget> tabs = [];
 
-    for (var i in json) {
+    final GlobalKey widthKey = GlobalKey();
+
+    for (int i = 0; i < listJson.length; i++) {
       tabs.add(
         Column(
           children: [
-            Row(
-              children: [
-                Container(
-                  color: Colors.red,
-                  child: const Text(
-                    'Name',
+            SizedBox(
+              height: wH,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const SizedBox(
+                    width: 30,
                   ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: TextField(
-                    readOnly: true,
-                    controller: TextEditingController(
-                      text: i['name'],
+                  Expanded(
+                    child: Container(
+                      decoration: const BoxDecoration(
+                          border: Border(
+                              bottom: BorderSide(
+                        color: Colors.amber,
+                        width: 4,
+                      ))),
+                      child: FittedBox(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          listJson[i]['name'],
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(
+                    width: 50,
+                  ),
+                ],
+              ),
             ),
-            Row(
-              children: [
-                const Text('IP'),
-                const SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: TextField(
-                    controller: TextEditingController(
-                      text: i['ip'],
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        i['ip'] = value;
-                      });
-                    },
+            const SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              height: wH,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const SizedBox(
+                    width: 10,
                   ),
-                ),
-              ],
+                  const NameWidget(name: 'IP'),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: Container(
+                      height: widthKey.currentContext?.size?.height ?? wH,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(20)),
+                          border: Border.all(
+                            color: Colors.black,
+                          )),
+                      child: TextField(
+                        controller: TextEditingController(
+                          text: listJson[i]['ip'],
+                        )..selection = TextSelection.fromPosition(TextPosition(
+                            offset: listJson[i]['ip'].toString().length)),
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            listJson[i]['ip'] = value;
+                          });
+                        },
+                        style: const TextStyle(
+                          fontSize: 50,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -131,7 +175,8 @@ class _NetworkTabWidgetState extends State<NetworkTabWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return SizedBox(
+      height: 400,
       child: Column(
         children: [
           Container(
@@ -142,11 +187,17 @@ class _NetworkTabWidgetState extends State<NetworkTabWidget>
               controller: _tabController,
               indicatorColor: Colors.red,
               labelColor: Colors.black,
+              labelStyle: const TextStyle(
+                fontSize: 30,
+              ),
               onTap: (value) {
                 setState(() {});
               },
               tabs: tabMaker(),
             ),
+          ),
+          const SizedBox(
+            height: 20,
           ),
           Expanded(
             child: TabBarView(
