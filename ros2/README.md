@@ -79,3 +79,13 @@ rosdep install --from-paths src --ignore-src -y --skip-keys "fastcdr rti-connext
 ```bash
 echo "source /opt/ros/foxy/setup.bash" >> ~/.zshrc
 ```
+
+## package
+
+```bash
+ros2 pkg create --build-type ament_cmake [package-name]
+```
+
+## example node
+
+[ex1](https://docs.ros.org/en/foxy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html)
