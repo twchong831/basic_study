@@ -3,3 +3,10 @@
 build/
 *.o
 
+*.colcon_install_layout
+*.py
+install/
+*.log
+/ros2/src/first_package_ros2/log/latest
+/ros2/src/first_package_ros2/log/latest_build
+/ros2/src/first_package_ros2/log/COLCON_IGNORE

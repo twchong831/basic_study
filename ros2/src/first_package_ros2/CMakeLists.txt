@@ -27,11 +27,10 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-add_executable(first_package_ros2 src/main.cpp)
+add_executable(talker src/main.cpp)
 ament_target_dependencies(talker rclcpp std_msgs)
 
-install(TARGETS
-  talker
-  ../ lib/${PROJECT_NAME})
+install(TARGETS talker
+		DESTINATION lib/${PROJECT_NAME})
 
 ament_package()

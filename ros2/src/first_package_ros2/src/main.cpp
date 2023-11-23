@@ -14,14 +14,14 @@ private:
 	/* data */
 	void timer_callback()
 	{
-		auto message = std_msgs::msg::String()l
+		auto message = std_msgs::msg::String();
 		message.data = "Hello, world" + std::to_string(count_++);
 		RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", message.data.c_str());
 		publisher_->publish(message);
 	}
 
 	rclcpp::TimerBase::SharedPtr timer_;
-	rclcpp::Publisher<std_msgs::msg:String>::SharedPtr publisher_;
+	rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
 	size_t count_;
 public:
 	MinimalPublisher(/* args */) : Node("minimal_publisher"), count_(0){
@@ -34,7 +34,7 @@ public:
 int main(int argc, char* argv[])
 {
 	rclcpp::init(argc, argv);
-	rclcpp::sping(std::make_shared<MinimalPublisher>());
+	rclcpp::spin(std::make_shared<MinimalPublisher>());
 	rclcpp::shutdown();
 
 	return 0;

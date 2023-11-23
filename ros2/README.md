@@ -89,3 +89,13 @@ ros2 pkg create --build-type ament_cmake [package-name]
 ## example node
 
 [ex1](https://docs.ros.org/en/foxy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html)
+
+### build
+
+```bash
+cd [project-dir]
+rosdep install -i -from-path src --rosdistro humble -y
+colcon build --packages-select cpp_pubsub
+# zsh install/setup.zsh
+./install/setup.sh
+```
