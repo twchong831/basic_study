@@ -2,6 +2,20 @@
 
 - [ROS2 humble](https://docs.ros.org/en/humble/index.html)
 
+## ROS2 참고
+
+- 패키지 리스트 확인
+
+```bash
+ros2 pkg list
+```
+
+- 실행 중인 node 리스트 확인
+
+```bash
+ros2 node list
+```
+
 ## windows + wsl2
 
 - ROS2 개발 환경
@@ -88,9 +102,11 @@ ros2 pkg create --build-type ament_cmake [package-name]
 
 ## example node
 
+### ex1
+
 [ex1](https://docs.ros.org/en/foxy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html)
 
-### build
+#### build
 
 ```bash
 cd [project-dir]
@@ -99,3 +115,16 @@ colcon build --packages-select cpp_pubsub
 # zsh install/setup.zsh
 ./install/setup.sh
 ```
+
+### ex2
+
+[ex2](https://docs.ros.org/en/foxy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Cpp-Service-And-Client.html)
+
+#### make
+
+```bash
+ros2 pkg create --build-type ament_cmake cpp_srvcli --dependencies rclcpp example_interfaces
+```
+
+- 패키지가 'cpp_srvcli'라는 이름으로 생성됨
+- 
