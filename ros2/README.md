@@ -120,11 +120,56 @@ colcon build --packages-select cpp_pubsub
 
 [ex2](https://docs.ros.org/en/foxy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Cpp-Service-And-Client.html)
 
-#### make
+#### make package
 
 ```bash
 ros2 pkg create --build-type ament_cmake cpp_srvcli --dependencies rclcpp example_interfaces
 ```
 
 - 패키지가 'cpp_srvcli'라는 이름으로 생성됨
-- 
+
+#### write Source code
+
+- 소스코드 작성
+
+#### how to build
+
+```bash
+# path : project/
+rosdep install -i -from-path src --rosdistro --humble -y
+colcon build --package-select cpp_srvcli
+```
+
+```bash
+source install/setup.bash
+# somtimes error
+cd install
+./setup.sh
+```
+
+#### active
+
+```bash
+ros2 run cpp_srvcli server
+```
+
+```bash
+ros2 run cpp_srvcli client 2 3
+```
+
+- result
+
+```bash
+# 2 + 3 
+5
+```
+
+#### result
+
+- server
+
+![result server](image/ex02_result_server.png)
+
+- client
+
+![result client](image/ex02_result_client.png)

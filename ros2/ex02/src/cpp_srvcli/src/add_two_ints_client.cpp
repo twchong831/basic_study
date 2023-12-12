@@ -9,7 +9,7 @@ using namespace std::chrono_literals;
 
 int main(int argc, char **argv)
 {
-	rclcpp:init(argc, argv);
+	rclcpp::init(argc, argv);
 
 	if(argc != 3)
 	{
@@ -17,6 +17,7 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
+	// create client node
 	std::shared_ptr<rclcpp::Node> node = rclcpp::Node::make_shared("add_two_ints_client");
 	rclcpp::Client<example_interfaces::srv::AddTwoInts>::SharedPtr client = 
 		node->create_client<example_interfaces::srv::AddTwoInts>("add_two_ints");
@@ -25,17 +26,20 @@ int main(int argc, char **argv)
 	request->a = atoll(argv[1]);
 	request->b = atoll(argv[2]);
 
+	// loop 1 Seconds
 	while(!client->wait_for_service(1s))
 	{
 		if(!rclcpp::ok())
 		{
+			// service exit using [ctrl] + 'c'
 			RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Interrupted while waiting for the service. Exiting.");
 			return 0;
 		}
+		// 
 		RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "service not available, waiting again...");
 	}
 
-	auto result client->async_send_request(request);
+	auto result = client->async_send_request(request);
 
 	//wait for the result
 	if(rclcpp::spin_until_future_complete(node, result) == rclcpp::FutureReturnCode::SUCCESS)
