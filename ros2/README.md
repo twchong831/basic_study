@@ -173,3 +173,8 @@ ros2 run cpp_srvcli client 2 3
 - client
 
 ![result client](image/ex02_result_client.png)
+
+### ex 3
+
+[using parameters in a class](https://docs.ros.org/en/iron/Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-CPP.html#)
+

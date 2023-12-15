@@ -11,9 +11,11 @@ install/
 /ros2/src/ex01/first_package_ros2/log/latest_build
 /ros2/src/ex01/first_package_ros2/log/COLCON_IGNORE
 
-/ros2/src/ex01/first_package_ros2/log/
+/ros2/src/ex01/first_package_ros2/log
 ros2/ex02/log/latest
 ros2/ex02/log/COLCON_IGNORE
 ros2/ex01/first_package_ros2/log/latest_build
 ros2/ex01/first_package_ros2/log/latest
 ros2/ex01/first_package_ros2/log/COLCON_IGNORE
+
+log/
