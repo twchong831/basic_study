@@ -10,9 +10,9 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
-# find_package(PCL REQUIRED)
+find_package(PCL 1.12 REQUIRED)
 find_package(pcl_conversions REQUIRED)
-find_package(pcl_apps-1.12 REQUIRED)
+# find_package(pcl_apps-1.12 REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -26,7 +26,14 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
+# include_directories( ${PCL_INCLUDE_DIRS} )
+# add_definitions( ${PCL_DEFINITIONS} )
+# link_directories( ${PCL_LIBRARY_DIRS} )
+
 add_executable(ros2pcl_test src/main.cpp)
+
+ament_target_dependencies(ros2pcl_test rclcpp)
+target_link_libraries( ros2pcl_test ${PCL_LIBRARIES} )
 
 install(TARGETS ros2pcl_test
 		DESTINATION lib/${PROJECT_NAME})
